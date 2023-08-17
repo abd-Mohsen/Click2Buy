@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:test1/constants.dart';
-import 'package:test1/models/variant_model.dart';
+import 'package:test1/models/variant_model1.dart';
 
 class VariantCard extends StatelessWidget {
-  final VariantModel variant;
+  final VariantModel1 variant;
   final bool isSelected;
   final void Function() onSelect;
   const VariantCard({super.key, required this.variant, required this.isSelected, required this.onSelect});

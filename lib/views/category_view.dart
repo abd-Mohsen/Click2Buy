@@ -4,7 +4,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:test1/components/category_card.dart';
 import 'package:test1/components/product_card.dart';
 import 'package:test1/controllers/category_controller.dart';
@@ -63,7 +62,7 @@ class CategoryView extends GetView<CategoryController> {
                     child: Hero(
                       tag: heroTag,
                       child: CachedNetworkImage(
-                        imageUrl: "$kHostIP/${category.photo.replaceFirst("public", "storage")}",
+                        imageUrl: "$kHostIP/storage/${category.photo}",
                         fit: BoxFit.cover,
                         httpHeaders: kImageHeaders,
                         placeholder: (context, url) => SpinKitFadingCircle(
@@ -129,6 +128,7 @@ class CategoryView extends GetView<CategoryController> {
                         ),
                       ),
                     ),
+                    Divider(),
                     Expanded(
                       flex: 40,
                       child: ListView.builder(

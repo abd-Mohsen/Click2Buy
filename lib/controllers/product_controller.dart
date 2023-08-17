@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:test1/constants.dart';
 import 'package:test1/models/product_model.dart';
-import 'package:test1/models/variant_model.dart';
+import 'package:test1/models/variant_model1.dart';
 import 'package:test1/services/remote_services.dart';
 
 class ProductController extends GetxController {
@@ -15,18 +15,18 @@ class ProductController extends GetxController {
   bool _isSelected = false;
   bool get isSelected => _isSelected;
 
-  late List<bool> selected = List.generate(product.details!.length, (i) => false);
+  late List<bool> selected = List.generate(product.variants.length, (i) => false);
 
-  late VariantModel? _selectedVariant;
-  VariantModel? get selectedVariant => _selectedVariant;
+  late VariantModel1? _selectedVariant;
+  VariantModel1? get selectedVariant => _selectedVariant;
 
   final ProductModel product;
 
-  late String _currentPicUrl = product.photos![0];
+  late String _currentPicUrl = product.photos[0];
   String get currentPicUrl => _currentPicUrl;
 
-  void changeVariant(VariantModel variant, int i) {
-    _currentPicUrl = variant.image == "not found" ? product.photos![0] : variant.image!;
+  void changeVariant(VariantModel1 variant, int i) {
+    _currentPicUrl = variant.image == "not found" ? product.photos[0] : variant.image;
     _selectedVariant = variant;
     _isSelected = true;
     for (int j = 0; j < selected.length; j++) {

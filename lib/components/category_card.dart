@@ -4,7 +4,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:test1/constants.dart';
 import 'package:test1/models/category_model.dart';
-import 'package:test1/views/caregory_view.dart';
+import 'package:test1/views/category_view.dart';
 
 import '../controllers/category_controller.dart';
 

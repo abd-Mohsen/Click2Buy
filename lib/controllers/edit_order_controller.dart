@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
 import 'package:test1/models/order_model.dart';
-import 'package:test1/models/variant_model.dart';
 
 import '../models/address_model.dart';
 import '../models/company_model.dart';
+import '../models/variant_model2.dart';
 import '../services/remote_services.dart';
 
 class EditOrderController extends GetxController {
@@ -19,8 +19,8 @@ class EditOrderController extends GetxController {
 
   final OrderModel order;
 
-  late List<VariantModel> _variants = [];
-  List<VariantModel> get variants => _variants;
+  late List<VariantModel2> _variants = [];
+  List<VariantModel2> get variants => _variants;
 
   final List<int> deleted = [];
 

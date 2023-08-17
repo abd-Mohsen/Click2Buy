@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:test1/constants.dart';
-import 'package:test1/models/variant_model.dart';
+
+import '../models/variant_model2.dart';
 
 class EditOrderCard extends StatelessWidget {
-  final VariantModel variant;
+  final VariantModel2 variant;
   final VoidCallback deleteCallback;
   final VoidCallback increaseCallback;
   final VoidCallback decreaseCallback;
@@ -45,7 +46,7 @@ class EditOrderCard extends StatelessWidget {
                   title: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      variant.title!,
+                      variant.title,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: kTextStyle20.copyWith(color: cs.onSurface),
@@ -67,7 +68,7 @@ class EditOrderCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const SizedBox(height: 4),
-                      Text("${variant.colour!} | ${variant.size!} | ${variant.material!}",
+                      Text("${variant.colour} | ${variant.size} | ${variant.material}",
                           style: kTextStyle14, overflow: TextOverflow.ellipsis),
                     ],
                   ),
@@ -101,7 +102,7 @@ class EditOrderCard extends StatelessWidget {
                               onPressed: increaseCallback,
                               icon: Icon(
                                 Icons.add,
-                                color: variant.quantity! >= variant.quantity!.toInt()
+                                color: variant.quantity >= variant.quantity.toInt()
                                     ? cs.onSurface.withOpacity(0.3)
                                     : cs.primary,
                               ),
@@ -111,7 +112,7 @@ class EditOrderCard extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 12),
                       child: Text(
-                        "${((variant.price!) * variant.quantity!)}\$",
+                        "${((variant.price) * variant.quantity)}\$",
                         //"0000000",
                         style: kTextStyle24Bold.copyWith(color: cs.onSurface),
                         overflow: TextOverflow.ellipsis,

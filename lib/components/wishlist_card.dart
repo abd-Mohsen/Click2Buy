@@ -32,7 +32,7 @@ class WishlistCard extends StatelessWidget {
               height: 50,
               width: 50,
               child: CachedNetworkImage(
-                imageUrl: "$kHostIP/storage/${product.photos![0].replaceFirst("public", "storage")}",
+                imageUrl: "$kHostIP/storage/${product.photos[0].replaceFirst("public", "storage")}",
                 height: 50,
                 httpHeaders: const {'Connection': 'keep-alive'},
                 placeholder: (context, url) => SpinKitFadingCircle(

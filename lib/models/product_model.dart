@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:test1/models/comment_model.dart';
-import 'package:test1/models/variant_model.dart';
+import 'package:test1/models/variant_model1.dart';
 
 List<ProductModel> productModelFromJson(String str) =>
     List<ProductModel>.from(json.decode(str).map((x) => ProductModel.fromJson(x)));
@@ -9,28 +9,28 @@ List<ProductModel> productModelFromJson(String str) =>
 String productModelToJson(List<ProductModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class ProductModel {
-  final int price;
   final int id;
   final String title;
   final String description;
+  final int price;
   final Brand brand;
-  final Offer? offer;
+  final Offer offer;
   final Brand category;
-  final List<VariantModel>? details;
-  final List<CommentModel>? comments;
-  final List<Rating>? rating;
-  final List<String>? photos;
+  final List<VariantModel1> variants;
+  final List<CommentModel> comments;
+  final List<Rating> rating;
+  final List<String> photos;
   final DateTime createdAt;
 
   ProductModel({
-    required this.price,
     required this.id,
     required this.title,
     required this.description,
+    required this.price,
     required this.brand,
     required this.offer,
     required this.category,
-    required this.details,
+    required this.variants,
     required this.comments,
     required this.rating,
     required this.photos,
@@ -39,13 +39,13 @@ class ProductModel {
 
   factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
         id: json["id"],
-        price: json["price"] ?? 0,
         title: json["title"],
         description: json["descraption"],
+        price: json["price"],
         brand: Brand.fromJson(json["brand"]),
         offer: Offer.fromJson(json["offer"]),
         category: Brand.fromJson(json["category"]),
-        details: List<VariantModel>.from(json["details"].map((x) => VariantModel.fromJson(x))),
+        variants: List<VariantModel1>.from(json["details"].map((x) => VariantModel1.fromJson(x))),
         comments: List<CommentModel>.from(json["ratings_and_comments"].map((x) => CommentModel.fromJson(x))),
         rating: List<Rating>.from(json["evaluation"].map((x) => Rating.fromJson(x))),
         photos: List<String>.from(json["photos"].map((x) => x)),
@@ -56,13 +56,14 @@ class ProductModel {
         "id": id,
         "title": title,
         "descraption": description,
+        "price": price,
         "brand": brand.toJson(),
-        "offer": offer!.toJson(),
+        "offer": offer.toJson(),
         "category": category.toJson(),
-        "details": List<dynamic>.from(details!.map((x) => x.toJson())),
-        "ratings_and_comments": List<dynamic>.from(comments!.map((x) => x.toJson())),
-        "evaluation": List<dynamic>.from(rating!.map((x) => x.toJson())),
-        "photos": List<dynamic>.from(photos!.map((x) => x)),
+        "details": List<dynamic>.from(variants.map((x) => x.toJson())),
+        "ratings_and_comments": List<dynamic>.from(comments.map((x) => x.toJson())),
+        "evaluation": List<dynamic>.from(rating.map((x) => x.toJson())),
+        "photos": List<dynamic>.from(photos.map((x) => x)),
         "created_at": createdAt.toIso8601String(),
       };
 }
@@ -88,8 +89,8 @@ class Brand {
 }
 
 class Rating {
-  final double? value;
-  final int? count;
+  final int value;
+  final int count;
 
   Rating({
     required this.value,
@@ -97,7 +98,7 @@ class Rating {
   });
 
   factory Rating.fromJson(Map<String, dynamic> json) => Rating(
-        value: json["evaluation"] ?? 0,
+        value: json["evaluation"],
         count: json["count_people_evaluation"],
       );
 
@@ -115,7 +116,7 @@ class Offer {
   });
 
   factory Offer.fromJson(Map<String, dynamic> json) => Offer(
-        value: json["value"] ?? 0,
+        value: json["value"],
       );
 
   Map<String, dynamic> toJson() => {

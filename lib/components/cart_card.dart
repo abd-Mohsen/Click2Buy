@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:test1/constants.dart';
 import 'package:test1/controllers/cart_controller.dart';
-import 'package:test1/models/variant_model.dart';
+import 'package:test1/models/variant_model1.dart';
 import 'package:test1/views/product_view.dart';
 
 import '../models/product_model.dart';
 
 class CartCard extends StatelessWidget {
   final ProductModel product;
-  final VariantModel variant;
+  final VariantModel1 variant;
   final VoidCallback deleteCallback;
   final VoidCallback increaseCallback;
   final VoidCallback decreaseCallback;
@@ -49,7 +49,7 @@ class CartCard extends StatelessWidget {
                       tag: "cart${product.id}${variant.id}",
                       child: Image.network(
                         variant.image == "not found"
-                            ? "$kHostIP/storage/${product.photos![0]}"
+                            ? "$kHostIP/storage/${product.photos[0]}"
                             : "$kHostIP/storage/${variant.image}",
                         headers: const {'Connection': 'keep-alive'},
                       ),
@@ -80,11 +80,11 @@ class CartCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const SizedBox(height: 4),
-                      Text(variant.colour!, style: kTextStyle16, overflow: TextOverflow.ellipsis),
+                      Text(variant.colour, style: kTextStyle16, overflow: TextOverflow.ellipsis),
                       const SizedBox(height: 4),
-                      Text(variant.size!, style: kTextStyle16, overflow: TextOverflow.ellipsis),
+                      Text(variant.size, style: kTextStyle16, overflow: TextOverflow.ellipsis),
                       const SizedBox(height: 4),
-                      Text(variant.material!, style: kTextStyle16, overflow: TextOverflow.ellipsis),
+                      Text(variant.material, style: kTextStyle16, overflow: TextOverflow.ellipsis),
                     ],
                   ),
                   shape: const RoundedRectangleBorder(
@@ -100,7 +100,7 @@ class CartCard extends StatelessWidget {
                   children: [
                     Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 8),
-                        child: variant.quantity! > 0
+                        child: variant.quantity > 0
                             ? Row(
                                 children: [
                                   IconButton(
@@ -121,7 +121,7 @@ class CartCard extends StatelessWidget {
                                     onPressed: increaseCallback,
                                     icon: Icon(
                                       Icons.add,
-                                      color: cC.quantity[variant.id]! >= variant.quantity!.toInt()
+                                      color: cC.quantity[variant.id]! >= variant.quantity.toInt()
                                           ? cs.onSurface.withOpacity(0.3)
                                           : cs.primary,
                                     ),
@@ -135,7 +135,7 @@ class CartCard extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 12),
                       child: Text(
-                        "${((variant.price! - (variant.price! * product.offer!.value! / 100)) * cC.quantity[variant.id]!).toDouble()}\$",
+                        "${((variant.price - (variant.price * product.offer.value! / 100)) * cC.quantity[variant.id]!).toDouble()}\$",
                         style: kTextStyle24Bold.copyWith(color: cs.onSurface),
                       ),
                     ),

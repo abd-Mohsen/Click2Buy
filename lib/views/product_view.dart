@@ -247,20 +247,20 @@ class ProductView extends StatelessWidget {
                       color: cs.primary,
                     ),
                     //todo: put info icon in the appbar
-                    product.details == null
+                    product.variants.isEmpty
                         ? const SizedBox.shrink()
                         : GetBuilder<ProductController>(
                             builder: (con) => SizedBox(
                               height: 80,
                               child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
-                                itemCount: product.details!.length,
+                                itemCount: product.variants.length,
                                 // get builder
                                 itemBuilder: (context, i) => VariantCard(
-                                  variant: product.details![i],
+                                  variant: product.variants[i],
                                   isSelected: con.selected[i],
                                   onSelect: () {
-                                    con.changeVariant(product.details![i], i);
+                                    con.changeVariant(product.variants[i], i);
                                     // print(con.selected);
                                     // print(con.selectedVariant!.id);
                                   },
@@ -288,7 +288,7 @@ class ProductView extends StatelessWidget {
                         children: [
                           RatingBar.builder(
                             ignoreGestures: true,
-                            initialRating: product.rating!.isEmpty ? 0.0 : product.rating![0].value!,
+                            initialRating: product.rating.isEmpty ? 0.0 : product.rating[0].value.toDouble(),
                             glow: false,
                             itemSize: 20,
                             minRating: 1,
@@ -305,7 +305,7 @@ class ProductView extends StatelessWidget {
                             },
                           ),
                           Text(
-                            "(${product.rating!.isNotEmpty ? product.rating![0].count! : 0})",
+                            "(${product.rating.isNotEmpty ? product.rating[0].count : 0})",
                             style: kTextStyle20,
                           ),
                         ],
@@ -353,7 +353,7 @@ class ProductView extends StatelessWidget {
                       subtitle: Padding(
                         padding: const EdgeInsets.only(top: 2.0),
                         child: Text(
-                          "${product.comments!.where((comment) => comment.text != "").length} ${"comments".tr}",
+                          "${product.comments.where((comment) => comment.text != "").length} ${"comments".tr}",
                           style: kTextStyle18,
                         ),
                       ),
@@ -363,9 +363,9 @@ class ProductView extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20),
                             child: ListView.builder(
-                              itemCount: product.comments!.where((comment) => comment.text != "").length,
+                              itemCount: product.comments.where((comment) => comment.text != "").length,
                               itemBuilder: (context, i) => CommentCard(
-                                comment: product.comments!.where((comment) => comment.text != "").toList()[i],
+                                comment: product.comments.where((comment) => comment.text != "").toList()[i],
                               ),
                             ),
                           ),
@@ -373,7 +373,7 @@ class ProductView extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 20),
-                    product.offer!.value == null || product.offer!.value == 0
+                    product.offer.value == null || product.offer.value == 0
                         ? Text(
                             '\$${product.price}',
                             style: kTextStyle50.copyWith(color: cs.onSurface, decoration: TextDecoration.underline),
@@ -382,7 +382,7 @@ class ProductView extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                '\$${(product.price - (product.price * (product.offer!.value! / 100))).toPrecision(2).toString()}',
+                                '\$${(product.price - (product.price * (product.offer.value! / 100))).toPrecision(2).toString()}',
                                 style: kTextStyle50.copyWith(color: cs.onSurface, decoration: TextDecoration.underline),
                               ),
                               const SizedBox(width: 12),

@@ -3,15 +3,15 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:test1/models/address_model.dart';
 import 'package:test1/models/company_model.dart';
-import 'package:test1/models/variant_model.dart';
+import 'package:test1/models/variant_model1.dart';
 import 'package:test1/services/remote_services.dart';
 import '../models/product_model.dart';
 
 class CartController extends GetxController {
   final _getStorage = GetStorage();
 
-  final Map<int, VariantModel> _cart = {};
-  Map<int, VariantModel> get cart => _cart;
+  final Map<int, VariantModel1> _cart = {};
+  Map<int, VariantModel1> get cart => _cart;
 
   final Map<int, int> _quantity = {};
   Map<int, int> get quantity => _quantity;
@@ -66,7 +66,7 @@ class CartController extends GetxController {
     getCompanies();
   }
 
-  void addToCart(VariantModel variant, ProductModel product) {
+  void addToCart(VariantModel1 variant, ProductModel product) {
     if (_quantity.containsKey(variant.id)) {
       increaseVariantCount(variant);
     } else {
@@ -80,7 +80,7 @@ class CartController extends GetxController {
     saveCartInLocalStorage();
   }
 
-  void removeFromCart(VariantModel variant) {
+  void removeFromCart(VariantModel1 variant) {
     _parents.remove(variant.id); //todo: test this (if parents map get deleted without errors)
     _cart.remove(variant.id);
     _quantity.remove(variant.id);
@@ -96,15 +96,15 @@ class CartController extends GetxController {
     saveCartInLocalStorage();
   }
 
-  void increaseVariantCount(VariantModel variant) {
-    if (_quantity[variant.id]! < variant.quantity!) {
+  void increaseVariantCount(VariantModel1 variant) {
+    if (_quantity[variant.id]! < variant.quantity) {
       _quantity[variant.id] = (_quantity[variant.id]! + 1);
       update();
       saveCartInLocalStorage();
     }
   }
 
-  void decreaseVariantCount(VariantModel variant) {
+  void decreaseVariantCount(VariantModel1 variant) {
     if (_quantity[variant.id]! > 1) {
       _quantity[variant.id] = (_quantity[variant.id]! - 1);
       update();
@@ -113,17 +113,17 @@ class CartController extends GetxController {
   }
 
   void saveCartInLocalStorage() {
-    List<VariantModel> cartAsList = _cart.values.toList();
+    List<VariantModel1> cartAsList = _cart.values.toList();
     List<int> countAsList = _quantity.values.toList();
     List<ProductModel> parentsAsList = _parents.values.toList();
-    _getStorage.write("cart", variantModelToJson(cartAsList));
+    _getStorage.write("cart", variantModel1ToJson(cartAsList));
     _getStorage.write("parents", productModelToJson(parentsAsList));
     _getStorage.write("cart quantity", jsonEncode(countAsList));
   }
 
   void loadCartFromLocalStorage() {
     if (_getStorage.read("cart") != null && _getStorage.read("parents") != null) {
-      List<VariantModel> cartAsList = variantModelFromJson(_getStorage.read("cart"));
+      List<VariantModel1> cartAsList = variantModel1FromJson(_getStorage.read("cart"));
       List<ProductModel> parentsAsList = productModelFromJson(_getStorage.read("parents"));
       List countAsList = jsonDecode(_getStorage.read("cart quantity"));
       for (int i = 0; i < cartAsList.length; i++) {
@@ -189,9 +189,9 @@ class CartController extends GetxController {
 
   double get totalPrice {
     double sum = 0;
-    for (VariantModel variant in _cart.values) {
-      double unitPrice = (((variant.price ?? _parents[variant.id]!.price) -
-                  (variant.price! * _parents[variant.id]!.offer!.value! / 100)) *
+    for (VariantModel1 variant in _cart.values) {
+      double unitPrice = (((variant.price == 0 ? _parents[variant.id]!.price : variant.price) -
+                  (variant.price * _parents[variant.id]!.offer.value! / 100)) *
               _quantity[variant.id]!)
           .toDouble();
       sum += unitPrice;
@@ -201,7 +201,7 @@ class CartController extends GetxController {
 
   int get totalProductsAmount {
     int sum = 0;
-    for (VariantModel variant in _cart.values) {
+    for (VariantModel1 variant in _cart.values) {
       sum += _quantity[variant.id]!;
     }
     return sum;

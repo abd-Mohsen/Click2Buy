@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+///ignore this file
 class LocalizationObserver extends GetObserver {
   // @override
   // void onInit(RxController controller) {

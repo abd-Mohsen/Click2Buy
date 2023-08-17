@@ -24,7 +24,7 @@ class OrderCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "#${order.orderId}",
+              "#${order.id}",
               style: kTextStyle16.copyWith(color: cs.onSurface.withOpacity(0.7)),
             ),
             if (order.status == "waiting")

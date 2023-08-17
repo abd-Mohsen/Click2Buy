@@ -24,7 +24,7 @@ class SearchCard extends StatelessWidget {
                 color: Colors.white,
               ),
               child: Image.network(
-                "$kHostIP/storage/${product.photos![0]}",
+                "$kHostIP/storage/${product.photos[0]}",
                 headers: const {'Connection': 'keep-alive'},
                 loadingBuilder: (context, child, loadingProgress) {
                   if (loadingProgress == null) {
