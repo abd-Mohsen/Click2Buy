@@ -25,7 +25,6 @@ class HomeController extends GetxController {
     getAllRows();
     if (_getStorage.hasData("token")) getCurrentUser();
     Future.delayed(const Duration(seconds: 1));
-    //if (pageController.hasClients)
     startAutoScrollingBanners();
   }
 
