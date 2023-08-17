@@ -25,13 +25,13 @@ class HomeController extends GetxController {
     getAllRows();
     if (_getStorage.hasData("token")) getCurrentUser();
     Future.delayed(const Duration(seconds: 1));
-    startAutoScrollingBanners();
+    //startAutoScrollingBanners();
   }
 
   @override
   void onClose() {
     super.onClose();
-    _timer.cancel(); //stop auto scrolling
+    // _timer.cancel(); //stop auto scrolling
     pusher.disconnect();
     // pageController.dispose();
     // navigateController.dispose();
@@ -201,37 +201,39 @@ class HomeController extends GetxController {
 
   //--------------------------------------------------------------------------------
   //for banners auto-scroll
-  final List<Image> banners = [
-    Image.asset("assets/images/banner-05.png"),
-    Image.asset("assets/images/banner-06.png"),
-    Image.asset("assets/images/banner-01.jpg"),
-    Image.asset("assets/images/banner-02.jpg"),
-    Image.asset("assets/images/banner-03.jpg"),
+  final List<String> banners = [
+    "assets/images/banner-05.png",
+    "assets/images/banner-06.png",
+    "assets/images/banner-01.jpg",
+    "assets/images/banner-02.jpg",
+    "assets/images/banner-03.jpg",
   ];
 
-  int _currentPage = 0;
-  late Timer _timer;
-  final PageController _pageController = PageController(initialPage: 0);
-  PageController get pageController => _pageController;
-
-  //todo: banners stopped auto scrolling
-  void startAutoScrollingBanners() {
-    _timer = Timer.periodic(
-      const Duration(seconds: 4),
-      (timer) {
-        if (_currentPage < banners.length) {
-          _currentPage++;
-        } else {
-          _currentPage = 0;
-        }
-        _pageController.animateToPage(
-          _currentPage,
-          duration: const Duration(milliseconds: 500),
-          curve: Curves.easeIn,
-        );
-      },
-    );
-  }
+  // int _currentPage = 0;
+  // late Timer _timer;
+  // final PageController _pageController = PageController(initialPage: 0);
+  // PageController get pageController => _pageController;
+  //
+  // //todo: banners stopped auto scrolling
+  // void startAutoScrollingBanners() {
+  //   _timer = Timer.periodic(
+  //     const Duration(seconds: 4),
+  //     (timer) {
+  //       if (_currentPage < banners.length) {
+  //         _currentPage++;
+  //       } else {
+  //         _currentPage = 0;
+  //       }
+  //       if (pageController.hasClients) {
+  //         _pageController.animateToPage(
+  //           _currentPage,
+  //           duration: const Duration(milliseconds: 500),
+  //           curve: Curves.easeIn,
+  //         );
+  //       }
+  //     },
+  //   );
+  // }
 
   //--------------------------------------------------------------------------------
   //for bottom bar navigation

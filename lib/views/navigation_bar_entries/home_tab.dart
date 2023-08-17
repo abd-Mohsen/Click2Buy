@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:test1/components/products_row.dart';
@@ -23,18 +24,32 @@ class HomeTab extends StatelessWidget {
             flex: 5,
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 4),
-              child: PageView.builder(
-                controller: hC.pageController,
+              // child: PageView.builder(
+              //   controller: hC.pageController,
+              //   itemCount: hC.banners.length,
+              //   itemBuilder: (context, i) => Container(
+              //     color: cs.background,
+              //     child: Align(
+              //       alignment: AlignmentDirectional.topCenter,
+              //       child: ClipRRect(
+              //         borderRadius: BorderRadius.circular(20),
+              //         child: hC.banners[i],
+              //       ),
+              //     ),
+              //   ),
+              // ),
+              child: CarouselSlider.builder(
                 itemCount: hC.banners.length,
-                itemBuilder: (context, i) => Container(
-                  color: cs.background,
-                  child: Align(
-                    alignment: AlignmentDirectional.topCenter,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: hC.banners[i],
-                    ),
+                itemBuilder: (context, i, j) => Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: Image.asset(hC.banners[i]),
                   ),
+                ),
+                options: CarouselOptions(
+                  height: 400,
+                  autoPlay: true,
                 ),
               ),
             ),
