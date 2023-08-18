@@ -61,19 +61,19 @@ class _CategoryViewState extends State<CategoryView> {
 
   Future<void> getCategory(int id) async {
     try {
-      //page++;
       SubCategoryModel model = (await RemoteServices.fetchSubCategories(id, _page))!;
       _products = model.products;
-      _subCategories = model.subCategories;
+      if (model.subCategories.isNotEmpty) {
+        _subCategories = model.subCategories;
+      }
       setFetchedSubCategory(true);
     } on TimeoutException {
       setLoadingSubCategory(false);
-      // check ur internet fag
+      // check your internet connection
     } catch (e) {
-      //
+      // handle the error
     } finally {
       setLoadingSubCategory(false);
-      //page = 1;
     }
   }
 
@@ -191,21 +191,23 @@ class _CategoryViewState extends State<CategoryView> {
                       itemCount: products.length,
                       itemBuilder: (context, i) => ProductCard(
                         products[i],
-                        "${widget.category.id}cat${products[i].id}pro",
+                        "${widget.category.parentId}${widget.category.id}cat${products[i].id}pro",
                       ),
                     ),
                   ),
                   Divider(),
-                  Expanded(
-                    flex: 40,
-                    child: ListView.builder(
-                      itemCount: subCategories.length,
-                      itemBuilder: (context, i) => CategoryCard(
-                        category: subCategories[i],
-                        heroTag: "cat${subCategories[i]}",
-                      ),
-                    ),
-                  )
+                  widget.category.childrenCount != 0
+                      ? Expanded(
+                          flex: 40,
+                          child: ListView.builder(
+                            itemCount: subCategories.length,
+                            itemBuilder: (context, i) => CategoryCard(
+                              category: subCategories[i],
+                              heroTag: "cat${subCategories[i]}",
+                            ),
+                          ),
+                        )
+                      : SizedBox.shrink(),
                 ],
               ),
             ),

@@ -18,7 +18,8 @@ class EditOrderController extends GetxController {
   }
 
   EditOrderController({required this.order}) {
-    _variants = List.generate(order.variants.length, (i) => order.variants[i]);
+    //_variants = List.generate(order.variants.length, (i) => order.variants[i]);
+    _variants = order.variants;
   }
 
   final OrderModel order;
