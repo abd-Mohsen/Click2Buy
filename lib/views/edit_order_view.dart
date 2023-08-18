@@ -17,7 +17,7 @@ class EditOrderView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ColorScheme cs = Theme.of(context).colorScheme;
-    EditOrderController eOC = Get.put(EditOrderController(order: order));
+    Get.put(EditOrderController(order: order));
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -144,7 +144,7 @@ class EditOrderView extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 450,
+                height: 400,
                 child: Scrollbar(
                   child: ListView.builder(
                     itemCount: order.variants.length,
@@ -154,10 +154,10 @@ class EditOrderView extends StatelessWidget {
                         con.delete(order.variants[i]);
                       },
                       increaseCallback: () {
-                        con.increase(order.variants[i]);
+                        //con.increase(order.variants[i]);
                       },
                       decreaseCallback: () {
-                        con.decrease(order.variants[i]);
+                        //con.decrease(order.variants[i]);
                       },
                       quantity: con.currentQuantity[order.variants[i]] ?? order.variants[i].quantity,
                     ),

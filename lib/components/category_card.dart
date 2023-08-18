@@ -20,8 +20,9 @@ class CategoryCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
       child: GestureDetector(
         onTap: () {
-          Get.create(() => CategoryController(categoryId: category.id));
-          Get.to(() => CategoryView(category: category, heroTag: heroTag), preventDuplicates: false);
+          //Get.create(() => CategoryController(categoryId: category.id));
+          Get.to(() => CategoryView(category: category, heroTag: "$heroTag ${category.parentId}"),
+              preventDuplicates: false);
           print(category.id);
         },
         child: Hero(

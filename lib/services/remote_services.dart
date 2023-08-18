@@ -14,6 +14,7 @@ import 'package:test1/models/reset_password_model.dart';
 import 'package:test1/models/sub_cat_model.dart';
 import 'package:test1/models/user_model.dart';
 import 'package:test1/models/wishlist_model.dart';
+import '../models/banner_model.dart';
 import '../views/login_page.dart';
 
 //https://fakestoreapi.com/products
@@ -28,6 +29,16 @@ class RemoteServices {
 
   static var client = http.Client();
   //static var client2 = http.Client();
+
+  static Future<List<BannerModel>?> fetchBanners() async {
+    var response = await client.get(Uri.parse("$_hostIP/get_photo_top_bar"));
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return bannerModelFromJson(response.body);
+    } else {
+      Get.defaultDialog(title: "error", middleText: "network or server error\nerror code: ${response.statusCode}");
+      return null;
+    }
+  }
 
   static Future<List<ProductModel>?> fetchAllProducts() async {
     var response = await client.get(Uri.parse("https://fakestoreapi.com/products"));

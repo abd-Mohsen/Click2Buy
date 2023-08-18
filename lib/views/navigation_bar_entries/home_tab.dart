@@ -1,7 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:test1/components/products_row.dart';
+import 'package:test1/constants.dart';
 import 'package:test1/controllers/home_controller.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:test1/models/product_row_model.dart';
@@ -38,20 +40,27 @@ class HomeTab extends StatelessWidget {
               //     ),
               //   ),
               // ),
-              child: CarouselSlider.builder(
-                itemCount: hC.banners.length,
-                itemBuilder: (context, i, j) => Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: Image.asset(hC.banners[i]),
-                  ),
-                ),
-                options: CarouselOptions(
-                  height: 400,
-                  autoPlay: true,
-                ),
-              ),
+              child: GetBuilder<HomeController>(builder: (con) {
+                return con.isLoadingBanner
+                    ? SpinKitPianoWave(
+                        color: cs.primary,
+                        duration: const Duration(milliseconds: 1000),
+                      )
+                    : CarouselSlider.builder(
+                        itemCount: hC.banners.length,
+                        itemBuilder: (context, i, j) => Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: CachedNetworkImage(imageUrl: "$kHostIP/storage/${hC.banners[i].photo}"),
+                          ),
+                        ),
+                        options: CarouselOptions(
+                          height: 400,
+                          autoPlay: true,
+                        ),
+                      );
+              }),
             ),
           ),
           Expanded(

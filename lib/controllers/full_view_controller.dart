@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:test1/models/product_model.dart';
 
-import '../models/product_model.dart';
-
 class FullViewController extends GetxController {
   double _priceSliderStartValue = 0.0;
   double get priceSliderStartValue => _priceSliderStartValue;
@@ -43,6 +41,12 @@ class FullViewController extends GetxController {
     //   }
     // }
     //return filteredList;
-    return list;
+    return list
+        .where((p) =>
+            p.price >= _priceSliderStartValue &&
+            p.price <= _priceSliderEndValue &&
+            (p.rating.isNotEmpty ? p.rating[0].value : 0) >= _rateSliderStartValue &&
+            (p.rating.isNotEmpty ? p.rating[0].value : 0) <= _rateSliderEndValue)
+        .toList();
   }
 }

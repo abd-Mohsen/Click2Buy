@@ -19,8 +19,8 @@ class CommentCard extends StatelessWidget {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(comment.userName, style: kTextStyle22Bold, overflow: TextOverflow.ellipsis),
-            const SizedBox(height: 4),
+            Text(comment.userName, style: kTextStyle22Bold, overflow: TextOverflow.ellipsis, maxLines: 2),
+            const SizedBox(height: 8),
             comment.rating != null
                 ? RatingBar.builder(
                     ignoreGestures: true,

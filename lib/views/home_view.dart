@@ -47,25 +47,25 @@ class HomeView extends StatelessWidget {
                   width: 30,
                 ),
               ),
-              const SizedBox(width: 5),
+              const SizedBox(width: 10),
               Text(
                 "Click2Buy",
-                style: kTextStyle18Bold.copyWith(color: cs.onSurface),
+                style: kTextStyle20Bold.copyWith(color: cs.onSurface),
               ),
             ],
           ),
           actions: [
-            IconButton(
-              icon: Badge(
-                //alignment: AlignmentDirectional.topStart,
-                label: const Text("1"),
-                child: Icon(Icons.notifications_none_outlined, size: 27, color: cs.onSurface),
-              ),
-              onPressed: () {
-                //todo: make a notification page when back-end is ready
-                //todo: flutter local notifications
-              },
-            ),
+            // IconButton(
+            //   icon: Badge(
+            //     //alignment: AlignmentDirectional.topStart,
+            //     label: const Text("1"),
+            //     child: Icon(Icons.notifications_none_outlined, size: 27, color: cs.onSurface),
+            //   ),
+            //   onPressed: () {
+            //     //todo: make a notification page when back-end is ready
+            //     //todo: flutter local notifications
+            //   },
+            // ),
             IconButton(
               onPressed: () {
                 if (hC.isFetchedRows) {

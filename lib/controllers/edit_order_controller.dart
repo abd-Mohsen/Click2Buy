@@ -11,14 +11,14 @@ class EditOrderController extends GetxController {
   void onInit() {
     super.onInit();
     getCompanies();
-    updateQuantity();
-    for (VariantModel2 variant in order.variants) {
-      _currentQuantity[variant.id] = variant.quantity;
-    }
+    //updateQuantity();
+    // for (VariantModel2 variant in order.variants) {
+    //   _currentQuantity[variant.id] = variant.quantity;
+    // }
   }
 
   EditOrderController({required this.order}) {
-    _variants = order.variants;
+    _variants = List.generate(order.variants.length, (i) => order.variants[i]);
   }
 
   final OrderModel order;
@@ -71,31 +71,31 @@ class EditOrderController extends GetxController {
     update();
   }
 
-  void increase(VariantModel2 variant) {
-    if (edited.any((map) => map["inventory_id"] == variant.id)) {
-      for (int i = 0; i < edited.length; i++) {
-        if (edited[i]["inventory_id"] == variant.id) edited[i]["inventory_id"] = (edited[i]["inventory_id"])! + 1;
-      }
-    } else {
-      edited.add({"inventory_id": variant.id, "quantity": variant.quantity + 1});
-    }
-    _currentQuantity[variant.id] = _currentQuantity[variant.id]! + 1;
-    update();
-  }
-
-  void decrease(VariantModel2 variant) {
-    if (variant.quantity > 1) {
-      if (edited.any((map) => map["inventory_id"] == variant.id)) {
-        for (int i = 0; i < edited.length; i++) {
-          if (edited[i]["inventory_id"] == variant.id) (edited[i]["inventory_id"])! - 1;
-        }
-      } else {
-        edited.add({"inventory_id": variant.id, "quantity": variant.quantity - 1});
-      }
-      _currentQuantity[variant.id] = _currentQuantity[variant.id]! - 1;
-      update();
-    }
-  }
+  // void increase(VariantModel2 variant) {
+  //   if (edited.any((map) => map["inventory_id"] == variant.id)) {
+  //     for (int i = 0; i < edited.length; i++) {
+  //       if (edited[i]["inventory_id"] == variant.id) edited[i]["inventory_id"] = (edited[i]["inventory_id"])! + 1;
+  //     }
+  //   } else {
+  //     edited.add({"inventory_id": variant.id, "quantity": variant.quantity + 1});
+  //   }
+  //   _currentQuantity[variant.id] = _currentQuantity[variant.id]! + 1;
+  //   update();
+  // }
+  //
+  // void decrease(VariantModel2 variant) {
+  //   if (variant.quantity > 1) {
+  //     if (edited.any((map) => map["inventory_id"] == variant.id)) {
+  //       for (int i = 0; i < edited.length; i++) {
+  //         if (edited[i]["inventory_id"] == variant.id) (edited[i]["inventory_id"])! - 1;
+  //       }
+  //     } else {
+  //       edited.add({"inventory_id": variant.id, "quantity": variant.quantity - 1});
+  //     }
+  //     _currentQuantity[variant.id] = _currentQuantity[variant.id]! - 1;
+  //     update();
+  //   }
+  // }
 
   Future<void> getCompanies() async {
     try {

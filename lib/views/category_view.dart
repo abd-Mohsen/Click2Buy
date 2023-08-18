@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -6,16 +7,82 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:test1/components/category_card.dart';
 import 'package:test1/components/product_card.dart';
-import 'package:test1/controllers/category_controller.dart';
 import 'package:test1/models/category_model.dart';
 
 import '../constants.dart';
+import '../models/product_model.dart';
+import '../models/sub_cat_model.dart';
+import '../services/remote_services.dart';
 
-class CategoryView extends GetView<CategoryController> {
+class CategoryView extends StatefulWidget {
   final CategoryModel category;
   final String heroTag;
 
   const CategoryView({super.key, required this.category, required this.heroTag});
+
+  @override
+  State<CategoryView> createState() => _CategoryViewState();
+}
+
+class _CategoryViewState extends State<CategoryView> {
+  int _page = 1;
+
+  @override
+  void initState() {
+    super.initState();
+    getCategory(widget.category.id);
+  }
+
+  late List<CategoryModel> _subCategories = [];
+  List<CategoryModel> get subCategories => _subCategories;
+
+  late List<ProductModel> _products = [];
+  List<ProductModel> get products => _products;
+
+  bool _isLoadingSubCategory = true;
+  bool get isLoadingSubCategory => _isLoadingSubCategory;
+
+  void setLoadingSubCategory(bool val) {
+    _isLoadingSubCategory = val;
+    setState(() {
+      //
+    });
+  }
+
+  bool _isFetchedSubCat = false;
+  bool get isFetchedSubCat => _isFetchedSubCat;
+
+  void setFetchedSubCategory(bool val) {
+    _isFetchedSubCat = val;
+    setState(() {
+      //
+    });
+  }
+
+  Future<void> getCategory(int id) async {
+    try {
+      //page++;
+      SubCategoryModel model = (await RemoteServices.fetchSubCategories(id, _page))!;
+      _products = model.products;
+      _subCategories = model.subCategories;
+      setFetchedSubCategory(true);
+    } on TimeoutException {
+      setLoadingSubCategory(false);
+      // check ur internet fag
+    } catch (e) {
+      //
+    } finally {
+      setLoadingSubCategory(false);
+      //page = 1;
+    }
+  }
+
+  Future<void> refreshCategory() async {
+    setFetchedSubCategory(false);
+    setLoadingSubCategory(true);
+    _page = 1;
+    getCategory(widget.category.id);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,9 +127,9 @@ class CategoryView extends GetView<CategoryController> {
                     height: 200,
                     width: MediaQuery.of(context).size.width,
                     child: Hero(
-                      tag: heroTag,
+                      tag: widget.heroTag,
                       child: CachedNetworkImage(
-                        imageUrl: "$kHostIP/storage/${category.photo}",
+                        imageUrl: "$kHostIP/storage/${widget.category.photo}",
                         fit: BoxFit.cover,
                         httpHeaders: kImageHeaders,
                         placeholder: (context, url) => SpinKitFadingCircle(
@@ -88,7 +155,7 @@ class CategoryView extends GetView<CategoryController> {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      category.name,
+                      widget.category.name,
                       style: kTextStyle20.copyWith(
                         color: Colors.white,
                         shadows: [
@@ -107,40 +174,39 @@ class CategoryView extends GetView<CategoryController> {
               ],
             ),
           ),
-          GetBuilder<CategoryController>(
-            //init: SubCategoryController(categoryId: category.id),
-            builder: (con) => SliverFillRemaining(
-              child: RefreshIndicator(
-                onRefresh: con.refreshCategory,
-                child: Column(
-                  children: [
-                    Expanded(
-                      flex: 60,
-                      child: GridView.builder(
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          mainAxisExtent: 250,
-                        ),
-                        itemCount: con.products.length,
-                        itemBuilder: (context, i) => ProductCard(
-                          con.products[i],
-                          "${category.id}cat${con.products[i].id}pro",
-                        ),
+
+          //init: SubCategoryController(categoryId: category.id),
+          SliverFillRemaining(
+            child: RefreshIndicator(
+              onRefresh: refreshCategory,
+              child: Column(
+                children: [
+                  Expanded(
+                    flex: 60,
+                    child: GridView.builder(
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        mainAxisExtent: 250,
+                      ),
+                      itemCount: products.length,
+                      itemBuilder: (context, i) => ProductCard(
+                        products[i],
+                        "${widget.category.id}cat${products[i].id}pro",
                       ),
                     ),
-                    Divider(),
-                    Expanded(
-                      flex: 40,
-                      child: ListView.builder(
-                        itemCount: con.subCategories.length,
-                        itemBuilder: (context, i) => CategoryCard(
-                          category: con.subCategories[i],
-                          heroTag: "cat${con.subCategories[i]}",
-                        ),
+                  ),
+                  Divider(),
+                  Expanded(
+                    flex: 40,
+                    child: ListView.builder(
+                      itemCount: subCategories.length,
+                      itemBuilder: (context, i) => CategoryCard(
+                        category: subCategories[i],
+                        heroTag: "cat${subCategories[i]}",
                       ),
-                    )
-                  ],
-                ),
+                    ),
+                  )
+                ],
               ),
             ),
           ),

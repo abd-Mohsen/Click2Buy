@@ -10,7 +10,7 @@ class CategoryModel {
   final int id;
   final String name;
   final String photo;
-  final dynamic parentId;
+  final int? parentId;
   final int childrenCount;
 
   CategoryModel({
@@ -25,7 +25,7 @@ class CategoryModel {
         id: json["id"],
         name: json["name"],
         photo: json["photo"],
-        parentId: json["parent_id"],
+        parentId: json["parent_id"] ?? 0,
         childrenCount: json["number_of_children"],
       );
 

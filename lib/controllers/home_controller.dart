@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:intl/intl.dart';
 import 'package:test1/constants.dart';
+import 'package:test1/models/banner_model.dart';
 import 'package:test1/models/category_model.dart';
 import 'package:test1/models/product_model.dart';
 import 'package:test1/models/product_row_model.dart';
@@ -26,7 +26,7 @@ class HomeController extends GetxController {
     getParentsCategories();
     getAllRows();
     if (_getStorage.hasData("token")) getCurrentUser();
-    Future.delayed(const Duration(seconds: 1));
+    getBanners();
   }
 
   @override
@@ -109,8 +109,10 @@ class HomeController extends GetxController {
 
   Future refreshAllRows() async {
     setFetchedRows(false);
+    setLoadingBanners(true);
     setLoadingRows(true);
     getAllRows();
+    getBanners();
   }
 
   //--------------------------------------------------------------------------------
@@ -200,13 +202,42 @@ class HomeController extends GetxController {
 
   //--------------------------------------------------------------------------------
   //for banners auto-scroll
-  final List<String> banners = [
-    "assets/images/banner-05.png",
-    "assets/images/banner-06.png",
-    "assets/images/banner-01.jpg",
-    "assets/images/banner-02.jpg",
-    "assets/images/banner-03.jpg",
-  ];
+  // final List<String> banners = [
+  //   "assets/images/banner-05.png",
+  //   "assets/images/banner-06.png",
+  //   "assets/images/banner-01.jpg",
+  //   "assets/images/banner-02.jpg",
+  //   "assets/images/banner-03.jpg",
+  // ];
+
+  late List<BannerModel> banners = [];
+
+  bool isLoadingBanner = false;
+  // bool isFetchedBanner = false;
+
+  void setLoadingBanners(bool value) {
+    isLoadingBanner = value;
+    update();
+  }
+
+  // void setFetchedBanners(bool value) {
+  //   isFetchedBanner = value;
+  //   update();
+  // }
+
+  void getBanners() async {
+    try {
+      setLoadingBanners(true);
+      banners = (await RemoteServices.fetchBanners().timeout(kTimeOutDuration))!;
+      //setFetchedBanners(true);
+    } on TimeoutException {
+      kTimeOutDialog();
+    } catch (e) {
+      //
+    } finally {
+      setLoadingBanners(false);
+    }
+  }
 
   //--------------------------------------------------------------------------------
   //for bottom bar navigation
