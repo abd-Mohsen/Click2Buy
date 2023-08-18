@@ -81,7 +81,7 @@ class OrderCard extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 40.0),
             child: ElevatedButton(
               onPressed: () {
-                Get.to(EditOrderView(order: order));
+                Get.to(() => EditOrderView(order: order));
               },
               child: Padding(
                 padding: const EdgeInsets.all(4.0),
@@ -98,6 +98,14 @@ class OrderCard extends StatelessWidget {
                   ],
                 ),
               ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: Text(
+              "${order.deliveryCompany.name} | ${order.deliveryCompany.address}",
+              style: kTextStyle16.copyWith(color: cs.onSurface.withOpacity(0.6)),
+              overflow: TextOverflow.ellipsis,
             ),
           ),
           Padding(

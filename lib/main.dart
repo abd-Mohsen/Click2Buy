@@ -39,6 +39,7 @@ void main() async {
 //todo: make sliver pic with sliver appbar in product view
 //todo: change fonts for both ar and en
 //todo: optimize routes and controllers
+// todo: make a twitter like snack_bars (one for home and one for inner pages)
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

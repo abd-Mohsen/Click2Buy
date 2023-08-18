@@ -8,6 +8,7 @@ class EditOrderCard extends StatelessWidget {
   final VoidCallback deleteCallback;
   final VoidCallback increaseCallback;
   final VoidCallback decreaseCallback;
+  final int quantity;
 
   const EditOrderCard({
     super.key,
@@ -15,6 +16,7 @@ class EditOrderCard extends StatelessWidget {
     required this.increaseCallback,
     required this.decreaseCallback,
     required this.variant,
+    required this.quantity,
   });
   @override
   Widget build(BuildContext context) {
@@ -95,16 +97,14 @@ class EditOrderCard extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              variant.quantity.toString(),
+                              quantity.toString(),
                               style: kTextStyle26.copyWith(color: cs.onSurface),
                             ),
                             IconButton(
                               onPressed: increaseCallback,
                               icon: Icon(
                                 Icons.add,
-                                color: variant.quantity >= variant.quantity.toInt()
-                                    ? cs.onSurface.withOpacity(0.3)
-                                    : cs.primary,
+                                color: cs.primary,
                               ),
                             ),
                           ],
@@ -112,8 +112,7 @@ class EditOrderCard extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 12),
                       child: Text(
-                        "${((variant.price) * variant.quantity)}\$",
-                        //"0000000",
+                        "${((variant.price) * quantity)}\$",
                         style: kTextStyle24Bold.copyWith(color: cs.onSurface),
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,

@@ -16,16 +16,20 @@ class OrderSubCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: ListTile(
         leading: variant.photo != "not found"
-            ? CachedNetworkImage(
-                imageUrl: "$kHostIP/storage/${variant.photo}",
-                height: 50,
-                httpHeaders: const {'Connection': 'keep-alive'},
-                placeholder: (context, url) => SpinKitFadingCircle(
-                  color: cs.primary,
-                  size: 5,
-                  duration: const Duration(milliseconds: 1000),
+            ? SizedBox(
+                height: 60,
+                width: 60,
+                child: CachedNetworkImage(
+                  imageUrl: "$kHostIP/storage/${variant.photo}",
+                  height: 50,
+                  httpHeaders: const {'Connection': 'keep-alive'},
+                  placeholder: (context, url) => SpinKitFadingCircle(
+                    color: cs.primary,
+                    size: 5,
+                    duration: const Duration(milliseconds: 1000),
+                  ),
+                  fit: BoxFit.cover,
                 ),
-                fit: BoxFit.cover,
               )
             : const SizedBox.shrink(),
         title: Text(

@@ -131,6 +131,8 @@ class MyLocale extends Translations {
           "edit order": "edit order",
           "added to cart": "added to cart",
           "added to wishlist": "added to wishlist",
+          "success": "success",
+          "order added": "order added",
         },
         "ar": {
           "account": "الحساب الشخصي",
@@ -259,7 +261,9 @@ class MyLocale extends Translations {
           "edit order dialog": "عدل كمية او احذف منتج او عدل شركة الشحن او عنوانها",
           "edit order": "تعديل الطلب",
           "added to cart": "اضيف لعربة التسوق",
-          "added to wishlist": "اضيف للمفضلة"
+          "added to wishlist": "اضيف للمفضلة",
+          "success": "نجحت العملية",
+          "order added": "تمت إضافة الطلب",
         }
       };
 }

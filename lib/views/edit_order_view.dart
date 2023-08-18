@@ -144,14 +144,23 @@ class EditOrderView extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 300,
-                child: ListView.builder(
-                  itemCount: order.variants.length,
-                  itemBuilder: (context, i) => EditOrderCard(
-                    variant: order.variants[i],
-                    deleteCallback: () {},
-                    increaseCallback: () {},
-                    decreaseCallback: () {},
+                height: 450,
+                child: Scrollbar(
+                  child: ListView.builder(
+                    itemCount: order.variants.length,
+                    itemBuilder: (context, i) => EditOrderCard(
+                      variant: order.variants[i],
+                      deleteCallback: () {
+                        con.delete(order.variants[i]);
+                      },
+                      increaseCallback: () {
+                        con.increase(order.variants[i]);
+                      },
+                      decreaseCallback: () {
+                        con.decrease(order.variants[i]);
+                      },
+                      quantity: con.currentQuantity[order.variants[i]] ?? order.variants[i].quantity,
+                    ),
                   ),
                 ),
               ),

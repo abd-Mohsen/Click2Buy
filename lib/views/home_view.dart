@@ -12,8 +12,6 @@ import 'navigation_bar_entries/categories_tab.dart';
 import 'navigation_bar_entries/home_tab.dart';
 import 'navigation_bar_entries/settings_tab.dart';
 
-// todo: make appbar sliver
-// todo: make a twitter like snack_bars (one for home and one for inner pages)
 class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);
 
@@ -64,7 +62,6 @@ class HomeView extends StatelessWidget {
                 child: Icon(Icons.notifications_none_outlined, size: 27, color: cs.onSurface),
               ),
               onPressed: () {
-                hC.refreshAllRows();
                 //todo: make a notification page when back-end is ready
                 //todo: flutter local notifications
               },

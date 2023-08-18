@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:intl/intl.dart';
 import 'package:test1/constants.dart';
 import 'package:test1/models/category_model.dart';
 import 'package:test1/models/product_model.dart';
@@ -25,15 +27,12 @@ class HomeController extends GetxController {
     getAllRows();
     if (_getStorage.hasData("token")) getCurrentUser();
     Future.delayed(const Duration(seconds: 1));
-    //startAutoScrollingBanners();
   }
 
   @override
   void onClose() {
     super.onClose();
-    // _timer.cancel(); //stop auto scrolling
     pusher.disconnect();
-    // pageController.dispose();
     // navigateController.dispose();
   }
 
@@ -209,32 +208,6 @@ class HomeController extends GetxController {
     "assets/images/banner-03.jpg",
   ];
 
-  // int _currentPage = 0;
-  // late Timer _timer;
-  // final PageController _pageController = PageController(initialPage: 0);
-  // PageController get pageController => _pageController;
-  //
-  // //todo: banners stopped auto scrolling
-  // void startAutoScrollingBanners() {
-  //   _timer = Timer.periodic(
-  //     const Duration(seconds: 4),
-  //     (timer) {
-  //       if (_currentPage < banners.length) {
-  //         _currentPage++;
-  //       } else {
-  //         _currentPage = 0;
-  //       }
-  //       if (pageController.hasClients) {
-  //         _pageController.animateToPage(
-  //           _currentPage,
-  //           duration: const Duration(milliseconds: 500),
-  //           curve: Curves.easeIn,
-  //         );
-  //       }
-  //     },
-  //   );
-  // }
-
   //--------------------------------------------------------------------------------
   //for bottom bar navigation
 
@@ -312,17 +285,16 @@ class HomeController extends GetxController {
 
   Future initPusher() async {
     pusher.connect();
-    pusher.onConnectionError((error) {
-      print("error: ${error!.message}");
-    });
     Channel channel = pusher.subscribe("abd_channel");
 
     channel.bind("public-noti", (event) {
-      print("hi a");
-      NotificationService.showNotification(title: "hi");
-      print("hi b");
+      String msg = event!.data!;
+      print((jsonDecode(msg))["title"]);
+      //NotificationService.showNotification(title: message["jbb"], body: "this is a notification");
     });
-
+    // pusher.onConnectionError((error) {
+    //   print("error: ${error!.message}");
+    // });
     // pusher.onConnectionStateChange((state) {
     //   print("previousState: ${state!.previousState}, currentState: ${state.currentState}");
     // });

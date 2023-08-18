@@ -134,7 +134,6 @@ class CartController extends GetxController {
         _parents[cartAsList[i].id] = parentsAsList[i];
       }
       //todo: update variant quantity
-      //todo: show dialog after completing order
     }
   }
 
@@ -174,8 +173,6 @@ class CartController extends GetxController {
     } finally {
       setLoading(false);
     }
-    //todo: show a dialog that some of this variants are out of stock and wont be added to order
-    // todo (different response than 500)
     // print(orders);
     // print("totalprice: $totalPrice");
     // print("addressId: ${_selectedAddress.id}");
@@ -191,7 +188,7 @@ class CartController extends GetxController {
     double sum = 0;
     for (VariantModel1 variant in _cart.values) {
       double unitPrice = (((variant.price == 0 ? _parents[variant.id]!.price : variant.price) -
-                  (variant.price * _parents[variant.id]!.offer.value! / 100)) *
+                  (variant.price * (_parents[variant.id]!.offer.value ?? 0) / 100)) *
               _quantity[variant.id]!)
           .toDouble();
       sum += unitPrice;

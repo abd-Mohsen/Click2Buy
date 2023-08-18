@@ -11,6 +11,10 @@ class EditOrderController extends GetxController {
   void onInit() {
     super.onInit();
     getCompanies();
+    updateQuantity();
+    for (VariantModel2 variant in order.variants) {
+      _currentQuantity[variant.id] = variant.quantity;
+    }
   }
 
   EditOrderController({required this.order}) {
@@ -23,6 +27,11 @@ class EditOrderController extends GetxController {
   List<VariantModel2> get variants => _variants;
 
   final List<int> deleted = [];
+
+  late final Map<int, int> _currentQuantity = {};
+  Map<int, int> get currentQuantity => _currentQuantity;
+
+  late List<int> _quantity = [];
 
   final List<Map<String, int>> edited = [];
 
@@ -56,22 +65,37 @@ class EditOrderController extends GetxController {
     update();
   }
 
-  // void delete(VariantModel variant) {
-  //   deleted.add(variant.id);
-  //   _variants.remove(variant);
-  // }
-  //
-  // void increase(VariantModel variant) {
-  //   if (edited.any((map) => map["inventory_id"] == variant.id)) {
-  //     for (int i = 0; i < edited.length; i++) {
-  //       if (edited[i]["inventory_id"] == variant.id) {
-  //         edited[i]["inventory_id"] = 5;
-  //       }
-  //     }
-  //   } else {
-  //     edited.add({"inventory_id": variant.id, "quantity": variant.quantity! + 1});
-  //   }
-  // }
+  void delete(VariantModel2 variant) {
+    deleted.add(variant.id);
+    _variants.remove(variant);
+    update();
+  }
+
+  void increase(VariantModel2 variant) {
+    if (edited.any((map) => map["inventory_id"] == variant.id)) {
+      for (int i = 0; i < edited.length; i++) {
+        if (edited[i]["inventory_id"] == variant.id) edited[i]["inventory_id"] = (edited[i]["inventory_id"])! + 1;
+      }
+    } else {
+      edited.add({"inventory_id": variant.id, "quantity": variant.quantity + 1});
+    }
+    _currentQuantity[variant.id] = _currentQuantity[variant.id]! + 1;
+    update();
+  }
+
+  void decrease(VariantModel2 variant) {
+    if (variant.quantity > 1) {
+      if (edited.any((map) => map["inventory_id"] == variant.id)) {
+        for (int i = 0; i < edited.length; i++) {
+          if (edited[i]["inventory_id"] == variant.id) (edited[i]["inventory_id"])! - 1;
+        }
+      } else {
+        edited.add({"inventory_id": variant.id, "quantity": variant.quantity - 1});
+      }
+      _currentQuantity[variant.id] = _currentQuantity[variant.id]! - 1;
+      update();
+    }
+  }
 
   Future<void> getCompanies() async {
     try {
@@ -100,5 +124,15 @@ class EditOrderController extends GetxController {
     //todo loop over the response
     //todo update quantity
     update();
+  }
+
+  Future<void> editOrder() async {
+    try {
+      //
+    } catch (e) {
+      //
+    } finally {
+      //
+    }
   }
 }
