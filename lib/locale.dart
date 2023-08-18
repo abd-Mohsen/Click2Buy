@@ -129,6 +129,8 @@ class MyLocale extends Translations {
           "how to edit order": "how to edit order",
           "edit order dialog": "edit quantity, or delete products or change company or its address",
           "edit order": "edit order",
+          "added to cart": "added to cart",
+          "added to wishlist": "added to wishlist",
         },
         "ar": {
           "account": "الحساب الشخصي",
@@ -256,6 +258,8 @@ class MyLocale extends Translations {
           "how to edit order": "كيفية تعديل الطلبية",
           "edit order dialog": "عدل كمية او احذف منتج او عدل شركة الشحن او عنوانها",
           "edit order": "تعديل الطلب",
+          "added to cart": "اضيف لعربة التسوق",
+          "added to wishlist": "اضيف للمفضلة"
         }
       };
 }

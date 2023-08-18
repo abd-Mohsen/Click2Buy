@@ -12,6 +12,10 @@ class ProductController extends GetxController {
 
   final GetStorage _getStorage = GetStorage();
 
+  int myRate = 0;
+
+  final TextEditingController commentController = TextEditingController();
+
   bool _isSelected = false;
   bool get isSelected => _isSelected;
 
@@ -54,6 +58,19 @@ class ProductController extends GetxController {
       }
     } on TimeoutException {
       kTimeOutDialog();
+    } catch (e) {
+      print(e.toString());
+    } finally {
+      //
+    }
+  }
+
+  Future<void> giveOpinion() async {
+    try {
+      if (await RemoteServices.addOpinion(
+          _getStorage.read("token"), product.id, myRate.toString(), commentController.text)) {
+        Get.defaultDialog(title: "success".tr, middleText: "opinion added".tr);
+      }
     } catch (e) {
       print(e.toString());
     } finally {

@@ -33,7 +33,7 @@ class EditOrderCard extends StatelessWidget {
             children: [
               ListTile(
                   tileColor: cs.surface,
-                  leading: variant.photo == "not found"
+                  leading: variant.photo != "not found"
                       ? SizedBox(
                           height: 40,
                           width: 40,

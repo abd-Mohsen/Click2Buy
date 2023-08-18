@@ -26,7 +26,7 @@ class CategoryModel {
         name: json["name"],
         photo: json["photo"],
         parentId: json["parent_id"],
-        childrenCount: json["number_of_children"] ?? 0,
+        childrenCount: json["number_of_children"],
       );
 
   Map<String, dynamic> toJson() => {

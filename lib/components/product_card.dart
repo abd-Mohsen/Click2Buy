@@ -133,31 +133,31 @@ class ProductCard extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                            // GetBuilder<CartController>(
-                            //   init: CartController(),
-                            //   builder: (con) => GestureDetector(
-                            //     onTap: () {
-                            //       con.addToCart(product.variants[0], product); //details is null
-                            //       Get.showSnackbar(GetSnackBar(
-                            //         messageText: Text(
-                            //           "added to cart".tr,
-                            //           textAlign: TextAlign.center,
-                            //           style: kTextStyle14.copyWith(color: Colors.white),
-                            //         ),
-                            //         backgroundColor: Colors.grey.shade800,
-                            //         duration: const Duration(milliseconds: 800),
-                            //         borderRadius: 30,
-                            //         maxWidth: 150,
-                            //         margin: const EdgeInsets.only(bottom: 50),
-                            //       ));
-                            //     },
-                            //     child: CircleAvatar(
-                            //       backgroundColor: cs.primary,
-                            //       radius: 15,
-                            //       child: Icon(Icons.add_shopping_cart, size: 18, color: cs.onPrimary),
-                            //     ),
-                            //   ),
-                            // )
+                            GetBuilder<CartController>(
+                              init: CartController(),
+                              builder: (con) => GestureDetector(
+                                onTap: () {
+                                  con.addToCart(product.variants[0], product); //details is null
+                                  Get.showSnackbar(GetSnackBar(
+                                    messageText: Text(
+                                      "added to cart".tr,
+                                      textAlign: TextAlign.center,
+                                      style: kTextStyle14.copyWith(color: Colors.white),
+                                    ),
+                                    backgroundColor: Colors.grey.shade800,
+                                    duration: const Duration(milliseconds: 800),
+                                    borderRadius: 30,
+                                    maxWidth: 200,
+                                    margin: const EdgeInsets.only(bottom: 50),
+                                  ));
+                                },
+                                child: CircleAvatar(
+                                  backgroundColor: cs.primary,
+                                  radius: 15,
+                                  child: Icon(Icons.add_shopping_cart, size: 18, color: cs.onPrimary),
+                                ),
+                              ),
+                            )
                           ],
                         ),
                       ],

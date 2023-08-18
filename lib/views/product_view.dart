@@ -14,6 +14,7 @@ import 'package:test1/controllers/cart_controller.dart';
 import '../constants.dart';
 import '../models/product_model.dart';
 
+//todo refresh this page alone and add it to cart
 class ProductView extends StatelessWidget {
   final ProductModel product;
   final String heroTag;
@@ -24,7 +25,6 @@ class ProductView extends StatelessWidget {
     required this.heroTag,
   });
 
-  //todo: add comments and rating (play store)
   @override
   Widget build(BuildContext context) {
     ColorScheme cs = Theme.of(context).colorScheme;
@@ -67,7 +67,7 @@ class ProductView extends StatelessWidget {
                 backgroundColor: isLoggedIn ? Colors.amberAccent : Colors.grey,
                 label: "rate the product".tr,
                 onPressed: () {
-                  TextEditingController comment = TextEditingController();
+                  TextEditingController comment = con.commentController;
                   isLoggedIn
                       ? Get.dialog(AlertDialog(
                           shape: RoundedRectangleBorder(
@@ -91,7 +91,7 @@ class ProductView extends StatelessWidget {
                                     color: Colors.amber,
                                   ),
                                   onRatingUpdate: (rating) {
-                                    //do nothing
+                                    con.myRate = rating.toInt();
                                   },
                                 ),
                                 SingleChildScrollView(
@@ -116,7 +116,7 @@ class ProductView extends StatelessWidget {
                           actions: [
                             TextButton(
                               onPressed: () {
-                                //
+                                con.giveOpinion();
                               },
                               child: Text(
                                 "submit".tr,
@@ -359,13 +359,16 @@ class ProductView extends StatelessWidget {
                       ),
                       children: [
                         SizedBox(
-                          height: 150,
+                          height: 200,
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20),
-                            child: ListView.builder(
-                              itemCount: product.comments.where((comment) => comment.text != "").length,
-                              itemBuilder: (context, i) => CommentCard(
-                                comment: product.comments.where((comment) => comment.text != "").toList()[i],
+                            child: Scrollbar(
+                              thumbVisibility: true,
+                              child: ListView.builder(
+                                itemCount: product.comments.where((comment) => comment.text != "").length,
+                                itemBuilder: (context, i) => CommentCard(
+                                  comment: product.comments.where((comment) => comment.text != "").toList()[i],
+                                ),
                               ),
                             ),
                           ),

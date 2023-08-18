@@ -520,41 +520,13 @@ class RemoteServices {
     }
   }
 
-  static Future<bool> addOpinion(String token, int id, int rate, String comment) async {
+  static Future<bool> addOpinion(String token, int id, String rate, String comment) async {
     var response = await client.post(
         Uri.parse(
-          "$_hostIP/add_comment_evaluation/$id",
+          "$_hostIP/add_edit_comment_evaluation/$id",
         ),
         headers: {
-          'Content-Type': 'application/json',
-          "Accept": 'application/json',
-          "Authorization": "Bearer $token",
-        },
-        body: {
-          "text": comment,
-          "evaluation": rate,
-        });
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      return true;
-    } else if (response.statusCode == 401) {
-      Get.offAll(LoginPage());
-      _getStorage.remove("token");
-      Future.delayed(const Duration(milliseconds: 200));
-      kSessionExpiredDialog();
-      return false;
-    } else {
-      Get.defaultDialog(title: "error".tr, middleText: jsonDecode(response.body)["message"]);
-      return false;
-    }
-  }
-
-  static Future<bool> editOpinion(String token, int id, int rate, String comment) async {
-    var response = await client.post(
-        Uri.parse(
-          "$_hostIP/edit_comment_evaluation/$id",
-        ),
-        headers: {
-          'Content-Type': 'application/json',
+          //'Content-Type': 'application/json',
           "Accept": 'application/json',
           "Authorization": "Bearer $token",
         },

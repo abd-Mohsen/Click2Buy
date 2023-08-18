@@ -7,11 +7,10 @@ import '../constants.dart';
 import 'order_subcard.dart';
 
 class OrderCard extends StatelessWidget {
-  OrderCard({super.key, required this.order});
+  const OrderCard({super.key, required this.order});
 
-  final DateTime orderDate = DateTime(2023, 5, 15, 18, 09); //todo: add real date
   final OrderModel order;
-
+  //'waiting', 'processing', 'delivering', 'delivered'
   @override
   Widget build(BuildContext context) {
     ColorScheme cs = Theme.of(context).colorScheme;
@@ -27,16 +26,16 @@ class OrderCard extends StatelessWidget {
               "#${order.id}",
               style: kTextStyle16.copyWith(color: cs.onSurface.withOpacity(0.7)),
             ),
-            if (order.status == "waiting")
+            if (order.status == "waiting" || order.status == "processing" || order.status == "delivering")
               const Icon(Icons.timelapse)
-            else if (order.status == "cancelled")
-              const Icon(Icons.dangerous_outlined, color: Colors.red)
+            else if (order.status == "delivered")
+              const Icon(Icons.task_alt, color: Colors.green)
             else
-              const Icon(Icons.task_alt, color: Colors.green),
+              const Icon(Icons.dangerous_outlined, color: Colors.red)
           ],
         ),
         title: Text(
-          "${DateFormat('yyyy-MM-dd').format(orderDate)}\n${DateFormat('h:mm a').format(orderDate)}",
+          "${DateFormat('yyyy-MM-dd').format(order.date)}\n${DateFormat('h:mm a').format(order.date)}",
           style: kTextStyle20.copyWith(color: cs.onSurface, fontWeight: FontWeight.w400),
         ),
         subtitle: Padding(

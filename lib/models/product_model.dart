@@ -89,7 +89,7 @@ class Brand {
 }
 
 class Rating {
-  final int value;
+  final num value;
   final int count;
 
   Rating({

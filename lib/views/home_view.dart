@@ -51,7 +51,7 @@ class HomeView extends StatelessWidget {
               ),
               const SizedBox(width: 5),
               Text(
-                "Ecommerce",
+                "Click2Buy",
                 style: kTextStyle18Bold.copyWith(color: cs.onSurface),
               ),
             ],
@@ -59,7 +59,7 @@ class HomeView extends StatelessWidget {
           actions: [
             IconButton(
               icon: Badge(
-                alignment: AlignmentDirectional.topStart,
+                //alignment: AlignmentDirectional.topStart,
                 label: const Text("1"),
                 child: Icon(Icons.notifications_none_outlined, size: 27, color: cs.onSurface),
               ),
