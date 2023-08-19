@@ -168,7 +168,22 @@ class EditOrderView extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 20),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    con.selected
+                        ? con.editOrder()
+                        : Get.showSnackbar(GetSnackBar(
+                            messageText: Text(
+                              "choose company and address first".tr,
+                              textAlign: TextAlign.center,
+                              style: kTextStyle14.copyWith(color: Colors.white),
+                            ),
+                            backgroundColor: Colors.grey.shade800,
+                            duration: const Duration(milliseconds: 1500),
+                            borderRadius: 30,
+                            maxWidth: 200,
+                            margin: const EdgeInsets.only(bottom: 50),
+                          ));
+                  },
                   child: con.isLoading
                       ? Center(
                           child: SpinKitSpinningLines(

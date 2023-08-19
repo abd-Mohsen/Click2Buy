@@ -7,7 +7,7 @@ String addressModelToJson(List<AddressModel> data) => json.encode(List<dynamic>.
 
 class AddressModel {
   final int id;
-  final List<String> address;
+  final List<String> address; //todo: fix address model
 
   AddressModel({
     required this.id,

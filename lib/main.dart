@@ -22,12 +22,10 @@ void main() async {
 }
 
 ///some self notes
-//todo: fix display and text factor
+//todo: pagination
 //todo: localize all text
 
 //todo: about/contact us in settings
-//todo: category sub pages
-//todo: search n filter
 //todo: for all network pics add a default image if its null
 
 //less important

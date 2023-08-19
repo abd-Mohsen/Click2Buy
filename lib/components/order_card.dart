@@ -81,7 +81,7 @@ class OrderCard extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 40.0),
             child: ElevatedButton(
               onPressed: () {
-                Get.to(() => EditOrderView(order: order));
+                Get.off(() => EditOrderView(order: order));
               },
               child: Padding(
                 padding: const EdgeInsets.all(4.0),

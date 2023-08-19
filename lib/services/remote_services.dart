@@ -537,14 +537,14 @@ class RemoteServices {
           "$_hostIP/add_edit_comment_evaluation/$id",
         ),
         headers: {
-          //'Content-Type': 'application/json',
+          'Content-Type': 'application/json',
           "Accept": 'application/json',
           "Authorization": "Bearer $token",
         },
-        body: {
+        body: jsonEncode({
           "text": comment,
           "evaluation": rate,
-        });
+        }));
     if (response.statusCode == 200 || response.statusCode == 201) {
       return true;
     } else if (response.statusCode == 401) {
@@ -559,20 +559,20 @@ class RemoteServices {
     }
   }
 
-  static Future<bool> editOrder(String token, int id, String rate, String comment) async {
+  static Future<bool> editOrder(String token, int id, int? addressId, List<int> deletions) async {
     var response = await client.post(
         Uri.parse(
-          "$_hostIP/add_edit_comment_evaluation/$id",
+          "$_hostIP/update_order/$id",
         ),
         headers: {
-          //'Content-Type': 'application/json',
+          'Content-Type': 'application/json',
           "Accept": 'application/json',
           "Authorization": "Bearer $token",
         },
-        body: {
-          "text": comment,
-          "evaluation": rate,
-        });
+        body: jsonEncode({
+          "deletions": deletions,
+          "delivery_company_address_id": addressId,
+        }));
     if (response.statusCode == 200 || response.statusCode == 201) {
       return true;
     } else if (response.statusCode == 401) {

@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:test1/models/order_model.dart';
 
 import '../models/address_model.dart';
@@ -7,6 +8,8 @@ import '../models/variant_model2.dart';
 import '../services/remote_services.dart';
 
 class EditOrderController extends GetxController {
+  final GetStorage _getStorage = GetStorage();
+
   @override
   void onInit() {
     super.onInit();
@@ -43,8 +46,8 @@ class EditOrderController extends GetxController {
   List<AddressModel> get addresses => _addresses;
 
   late CompanyModel _selectedCompany;
-  late AddressModel _selectedAddress;
-  AddressModel get selectedAddress => _selectedAddress;
+  late AddressModel? _selectedAddress;
+  AddressModel? get selectedAddress => _selectedAddress;
 
   bool enabled = false;
   bool selected = false;
@@ -129,7 +132,12 @@ class EditOrderController extends GetxController {
 
   Future<void> editOrder() async {
     try {
-      //
+      int? temp;
+      if (_selectedAddress != null) temp = _selectedAddress!.id;
+      print(temp);
+      print(deleted);
+      print(order.id);
+      await RemoteServices.editOrder(_getStorage.read("token"), order.id, temp, deleted);
     } catch (e) {
       //
     } finally {
