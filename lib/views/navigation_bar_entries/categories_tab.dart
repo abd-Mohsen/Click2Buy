@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:test1/components/category_card.dart';
 import '../../controllers/home_controller.dart';
 
 class CategoriesTab extends StatelessWidget {
   const CategoriesTab({Key? key}) : super(key: key);
 
-  //todo: category sub views
   @override
   Widget build(BuildContext context) {
     HomeController hC = Get.find();
@@ -21,16 +21,51 @@ class CategoriesTab extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 4),
               child: GetBuilder<HomeController>(builder: (con) {
                 if (hC.isLoadingCategories) {
-                  return Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SpinKitFadingCube(
-                          color: cs.primary,
-                          duration: const Duration(milliseconds: 1000),
+                  return ListView(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+                        child: Shimmer.fromColors(
+                          baseColor: Colors.grey[600]!,
+                          highlightColor: Colors.grey[200]!,
+                          child: Container(
+                            height: 200,
+                            decoration: BoxDecoration(
+                              color: Colors.white70,
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                          ),
                         ),
-                      ],
-                    ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+                        child: Shimmer.fromColors(
+                          baseColor: Colors.grey[600]!,
+                          highlightColor: Colors.grey[200]!,
+                          child: Container(
+                            height: 200,
+                            decoration: BoxDecoration(
+                              color: Colors.white70,
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+                        child: Shimmer.fromColors(
+                          baseColor: Colors.grey[600]!,
+                          highlightColor: Colors.grey[200]!,
+                          child: Container(
+                            height: 200,
+                            decoration: BoxDecoration(
+                              color: Colors.white70,
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
                   );
                 } else {
                   if (!hC.isFetchedCat) {

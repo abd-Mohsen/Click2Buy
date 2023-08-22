@@ -8,14 +8,14 @@ import 'package:test1/views/welcome_screen.dart';
 import 'locale.dart';
 import 'controllers/theme _controller.dart';
 
-class MyHttpOverrides extends HttpOverrides {
-  @override
-  HttpClient createHttpClient(context) => super.createHttpClient(context)..maxConnectionsPerHost = 5;
-}
+// class MyHttpOverrides extends HttpOverrides {
+//   @override
+//   HttpClient createHttpClient(context) => super.createHttpClient(context)..maxConnectionsPerHost = 5;
+// }
 
 void main() async {
   //await Firebase.initializeApp();
-  HttpOverrides.global = MyHttpOverrides();
+  //HttpOverrides.global = MyHttpOverrides();
   await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
@@ -38,6 +38,8 @@ void main() async {
 //todo: change fonts for both ar and en
 //todo: optimize routes and controllers
 // todo: make a twitter like snack_bars (one for home and one for inner pages)
+//todo:make banners with fixed height and width
+// todo: make banners sliver
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

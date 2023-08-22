@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:test1/components/auth_button.dart';
 import 'package:test1/controllers/home_controller.dart';
 import 'package:test1/views/login_page.dart';
@@ -34,14 +35,153 @@ class SettingsTab extends StatelessWidget {
                     if (con.isLoadingUser) {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Center(
-                          child: ListTile(
-                            tileColor: cs.surface,
-                            title: Text(
-                              "loading".tr,
-                              style: kTextStyle20.copyWith(color: cs.onSurface),
+                        child: Material(
+                          elevation: 5,
+                          borderRadius: BorderRadius.circular(10),
+                          child: ExpansionTile(
+                            leading: Icon(
+                              Icons.account_box,
+                              color: cs.onSurface,
+                              size: 30,
                             ),
-                            trailing: CircularProgressIndicator(color: cs.onSurface),
+                            title: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 12.0),
+                              child: Shimmer.fromColors(
+                                baseColor: Colors.grey[600]!,
+                                highlightColor: Colors.grey[200]!,
+                                child: Container(
+                                  height: 30,
+                                  width: 180,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                            subtitle: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 12),
+                              child: Shimmer.fromColors(
+                                baseColor: Colors.grey[600]!,
+                                highlightColor: Colors.grey[200]!,
+                                child: Container(
+                                  height: 20,
+                                  width: 80,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                            shape: RoundedRectangleBorder(
+                              side: const BorderSide(width: 0.5),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            collapsedShape: RoundedRectangleBorder(
+                              side: const BorderSide(width: 0.5),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            backgroundColor: cs.surface,
+                            collapsedBackgroundColor: cs.surface,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 16),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    ListTile(
+                                      leading: Icon(
+                                        Icons.mail,
+                                        color: cs.onBackground,
+                                      ),
+                                      title: Text("email".tr),
+                                      subtitle: Text(
+                                        con.currentUser[0].email,
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
+                                      ),
+                                    ),
+                                    ListTile(
+                                      leading: Icon(
+                                        Icons.phone_android,
+                                        color: cs.onBackground,
+                                      ),
+                                      title: Text("phone".tr),
+                                      subtitle: Text(
+                                        con.currentUser[0].phone,
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(vertical: 4),
+                                      child: Center(
+                                        child: TextButton(
+                                          onPressed: () {
+                                            Get.dialog(
+                                              AlertDialog(
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.circular(10),
+                                                ),
+                                                title: Text(
+                                                  "${"please enter your password first".tr}:",
+                                                  style: kTextStyle18,
+                                                ),
+                                                content: Form(
+                                                  key: con.settingKey,
+                                                  child: GetBuilder<HomeController>(
+                                                    builder: (con) => AuthField(
+                                                      textController: password,
+                                                      keyboardType: TextInputType.text,
+                                                      obscure: !con.passwordVisible,
+                                                      hintText: "password".tr,
+                                                      label: "password",
+                                                      prefixIconData: Icons.lock_outline,
+                                                      suffixIconData: con.passwordVisible
+                                                          ? CupertinoIcons.eye_slash
+                                                          : CupertinoIcons.eye,
+                                                      onIconPress: () {
+                                                        con.togglePasswordVisibility(!con.passwordVisible);
+                                                      },
+                                                      validator: (val) {
+                                                        return validateInput(password.text, 4, 50, "password");
+                                                      },
+                                                      onChanged: (val) {
+                                                        if (con.buttonPressed) {
+                                                          con.settingKey.currentState!.validate();
+                                                        }
+                                                      },
+                                                    ),
+                                                  ),
+                                                ),
+                                                actions: [
+                                                  Padding(
+                                                    padding: const EdgeInsets.only(bottom: 20),
+                                                    child: GetBuilder<HomeController>(
+                                                      builder: (con) => AuthButton(
+                                                        onTap: () {
+                                                          hideKeyboard(context);
+                                                          con.confirmPassword(password.text);
+                                                        },
+                                                        widget: con.isLoadingConfirmPassword
+                                                            ? SpinKitThreeBounce(color: cs.onPrimary, size: 24)
+                                                            : Text(
+                                                                "submit".tr,
+                                                                style: kTextStyle16Bold.copyWith(color: cs.onPrimary),
+                                                              ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            );
+                                          },
+                                          child: Text(
+                                            "edit".tr,
+                                            style: kTextStyle22.copyWith(color: cs.primary),
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       );

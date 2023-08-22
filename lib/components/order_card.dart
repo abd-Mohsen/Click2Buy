@@ -77,29 +77,8 @@ class OrderCard extends StatelessWidget {
               itemBuilder: (context, i) => OrderSubCard(variant: order.variants[i]),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 40.0),
-            child: ElevatedButton(
-              onPressed: () {
-                Get.off(() => EditOrderView(order: order));
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Edit".tr,
-                      style: kTextStyle22.copyWith(color: cs.onPrimary),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    const SizedBox(width: 4),
-                    Icon(Icons.edit, color: cs.onPrimary),
-                  ],
-                ),
-              ),
-            ),
-          ),
+          // ;3l
+
           Padding(
             padding: const EdgeInsets.only(top: 8.0),
             child: Text(

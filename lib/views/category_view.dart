@@ -195,7 +195,7 @@ class _CategoryViewState extends State<CategoryView> {
                       ),
                     ),
                   ),
-                  Divider(),
+                  const Divider(thickness: 2),
                   widget.category.childrenCount != 0
                       ? Expanded(
                           flex: 40,
@@ -203,11 +203,11 @@ class _CategoryViewState extends State<CategoryView> {
                             itemCount: subCategories.length,
                             itemBuilder: (context, i) => CategoryCard(
                               category: subCategories[i],
-                              heroTag: "cat${subCategories[i]}",
+                              heroTag: "cat${subCategories[i].id}${subCategories[i].parentId}",
                             ),
                           ),
                         )
-                      : SizedBox.shrink(),
+                      : const SizedBox.shrink(),
                 ],
               ),
             ),

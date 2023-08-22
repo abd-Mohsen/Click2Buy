@@ -6,7 +6,6 @@ import 'package:get_storage/get_storage.dart';
 import 'package:test1/constants.dart';
 import 'package:test1/models/banner_model.dart';
 import 'package:test1/models/category_model.dart';
-import 'package:test1/models/product_model.dart';
 import 'package:test1/models/product_row_model.dart';
 import 'package:test1/models/user_model.dart';
 import 'package:test1/services/notification_service.dart';
@@ -22,60 +21,21 @@ class HomeController extends GetxController {
   void onInit() {
     super.onInit();
     initPusher();
-    //getAllProductsList();
     getParentsCategories();
     getAllRows();
-    if (_getStorage.hasData("token")) getCurrentUser();
     getBanners();
+    if (_getStorage.hasData("token")) getCurrentUser();
   }
 
   @override
   void onClose() {
     super.onClose();
     pusher.disconnect();
-    // navigateController.dispose();
+    navigateController.dispose();
   }
 
   //--------------------------------------------------------------------------------
-  //for fetching all products from server
-  late List<ProductModel> _productsList;
-  List<ProductModel> get productsList => _productsList;
-  bool _isLoadingProducts = true;
-  bool get isLoadingProducts => _isLoadingProducts;
-  bool _isFetchedProducts = false;
-  bool get isFetchedProducts => _isFetchedProducts;
-
-  void setLoadingProduct(bool value) {
-    _isLoadingProducts = value;
-    update();
-  }
-
-  void setFetchedProducts(bool value) {
-    _isFetchedProducts = value;
-    update();
-  }
-
-  void getAllProductsList() async {
-    try {
-      _productsList = (await RemoteServices.fetchAllProducts().timeout(kTimeOutDuration))!;
-      setFetchedProducts(true);
-    } on TimeoutException {
-      setLoadingProduct(false);
-    } catch (e) {
-      //show different message if it was a server error
-    } finally {
-      setLoadingProduct(false);
-    }
-  }
-
-  Future refreshAllProducts() async {
-    setFetchedProducts(false);
-    setLoadingProduct(true);
-    getAllProductsList();
-  }
-
-  //--------------------------------------------------------------------------------
-  //for fetching product rows in home screen from server
+  //for fetching product rows in home from server
   late List<ProductRowModel> _rowsList;
   List<ProductRowModel> get rowsList => _rowsList;
   bool _isLoadingRows = true;
@@ -100,15 +60,15 @@ class HomeController extends GetxController {
     } on TimeoutException {
       setLoadingRows(false);
     } catch (e) {
-      print(e.toString());
-      //show different message if it was a server error
+      //
     } finally {
       setLoadingRows(false);
     }
   }
 
-  Future refreshAllRows() async {
+  Future refreshHome() async {
     setFetchedRows(false);
+    setFetchedBanners(false);
     setLoadingBanners(true);
     setLoadingRows(true);
     getAllRows();
@@ -145,7 +105,6 @@ class HomeController extends GetxController {
       //
     } finally {
       setLoadingUser(false);
-      print(_currentUser);
     }
   }
 
@@ -188,7 +147,7 @@ class HomeController extends GetxController {
     } on TimeoutException {
       setLoadingCategories(false);
     } catch (e) {
-      print(e.toString());
+      //
     } finally {
       setLoadingCategories(false);
     }
@@ -201,35 +160,27 @@ class HomeController extends GetxController {
   }
 
   //--------------------------------------------------------------------------------
-  //for banners auto-scroll
-  // final List<String> banners = [
-  //   "assets/images/banner-05.png",
-  //   "assets/images/banner-06.png",
-  //   "assets/images/banner-01.jpg",
-  //   "assets/images/banner-02.jpg",
-  //   "assets/images/banner-03.jpg",
-  // ];
 
   late List<BannerModel> banners = [];
 
   bool isLoadingBanner = false;
-  // bool isFetchedBanner = false;
+  bool isFetchedBanner = false;
 
   void setLoadingBanners(bool value) {
     isLoadingBanner = value;
     update();
   }
 
-  // void setFetchedBanners(bool value) {
-  //   isFetchedBanner = value;
-  //   update();
-  // }
+  void setFetchedBanners(bool value) {
+    isFetchedBanner = value;
+    update();
+  }
 
   void getBanners() async {
     try {
       setLoadingBanners(true);
-      banners = (await RemoteServices.fetchBanners().timeout(kTimeOutDuration))!;
-      //setFetchedBanners(true);
+      banners = (await RemoteServices.fetchBanners().timeout(kTimeOutDuration2))!;
+      setFetchedBanners(true);
     } on TimeoutException {
       kTimeOutDialog();
     } catch (e) {
@@ -243,7 +194,7 @@ class HomeController extends GetxController {
   //for bottom bar navigation
 
   int _selectedIndex = 1; // initial scaffold body index (home tab)
-  int get selectedIndex => _selectedIndex; // getter
+  int get selectedIndex => _selectedIndex;
   PageController navigateController = PageController(
     initialPage: 1,
     keepPage: true,

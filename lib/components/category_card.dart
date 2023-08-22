@@ -6,8 +6,6 @@ import 'package:test1/constants.dart';
 import 'package:test1/models/category_model.dart';
 import 'package:test1/views/category_view.dart';
 
-import '../controllers/category_controller.dart';
-
 class CategoryCard extends StatelessWidget {
   final CategoryModel category;
   final String heroTag;
@@ -21,9 +19,7 @@ class CategoryCard extends StatelessWidget {
       child: GestureDetector(
         onTap: () {
           //Get.create(() => CategoryController(categoryId: category.id));
-          Get.to(() => CategoryView(category: category, heroTag: "$heroTag ${category.parentId}"),
-              preventDuplicates: false);
-          print(category.id);
+          Get.to(() => CategoryView(category: category, heroTag: heroTag), preventDuplicates: false);
         },
         child: Hero(
           tag: heroTag,
@@ -36,7 +32,7 @@ class CategoryCard extends StatelessWidget {
                   httpHeaders: kImageHeaders,
                   placeholder: (context, url) => SpinKitFadingCircle(
                     color: cs.primary,
-                    size: 30,
+                    size: 40,
                     duration: const Duration(milliseconds: 1000),
                   ),
                   fit: BoxFit.cover,
@@ -78,17 +74,3 @@ class CategoryCard extends StatelessWidget {
     );
   }
 }
-
-// loadingBuilder: (context, child, loadingProgress) {
-// if (loadingProgress == null) {
-// return child;
-// } else {
-// return Center(
-// child: SpinKitFadingCircle(
-// color: cs.primary,
-// size: 30,
-// duration: const Duration(milliseconds: 1000),
-// ),
-// );
-// }
-// },

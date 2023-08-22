@@ -1,6 +1,5 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:test1/components/custom/abd_icons_icons.dart';
 import 'package:test1/constants.dart';
 import 'package:test1/themes.dart';
 import 'package:test1/controllers/cart_controller.dart';
@@ -88,6 +87,7 @@ class HomeView extends StatelessWidget {
                 size: 27,
               ),
             ),
+
             //wrapped in a get builder to show how many products in cart
             GetBuilder<CartController>(
               init: CartController(),
@@ -115,18 +115,11 @@ class HomeView extends StatelessWidget {
         ),
 
         //wrapped in get builder to change scaffold body based on index from navigation bar
-        //used indexed stack to not rebuild every widget from scratch when changing scaffold body
-        //fade indexed stack is indexed stack but with fade animation when changing scaffold body
 
         body: GetBuilder<HomeController>(
           builder: (con) => PageView(
-            //duration: const Duration(milliseconds: 150),
-            //index: con.selectedIndex,
             controller: con.navigateController,
-            onPageChanged: (int index) {
-              con.changeTab(index);
-            },
-            //physics: const AlwaysScrollableScrollPhysics(),
+            onPageChanged: (int index) => con.changeTab(index),
             children: bodies,
           ),
         ),
@@ -145,7 +138,7 @@ class HomeView extends StatelessWidget {
                 size: 27,
               ),
               Icon(
-                AbdIcons.tags,
+                Icons.category_outlined,
                 color: cs.onSurface,
                 size: 27,
               ),
@@ -155,9 +148,7 @@ class HomeView extends StatelessWidget {
             backgroundColor: Colors.transparent,
             color: !Get.isDarkMode ? Colors.grey.shade200 : cs.surface,
             animationDuration: const Duration(milliseconds: 250),
-            onTap: (i) {
-              con.changeTab(i);
-            },
+            onTap: (i) => con.changeTab(i),
           ),
         ),
       ),

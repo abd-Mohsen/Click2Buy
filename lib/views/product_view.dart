@@ -193,9 +193,11 @@ class ProductView extends StatelessWidget {
             style: kTextStyle26.copyWith(color: cs.onSurface),
           ),
           leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: cs.onSurface),
-            onPressed: () => Get.back(),
-          ),
+              icon: Icon(Icons.arrow_back, color: cs.onSurface),
+              onPressed: () {
+                Get.delete<ProductController>();
+                Get.back();
+              }),
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -210,7 +212,7 @@ class ProductView extends StatelessWidget {
                       tag: heroTag,
                       child: GetBuilder<ProductController>(
                         builder: (con) => CachedNetworkImage(
-                          imageUrl: "$kHostIP/storage/${con.currentPicUrl}",
+                          imageUrl: "$kHostIP/storage/${con.currentPicUrl ?? product.photos[0]}",
                           fit: BoxFit.fill,
                           httpHeaders: const {'Connection': 'keep-alive'},
                           placeholder: (context, url) => Center(
@@ -261,8 +263,6 @@ class ProductView extends StatelessWidget {
                                   isSelected: con.selected[i],
                                   onSelect: () {
                                     con.changeVariant(product.variants[i], i);
-                                    // print(con.selected);
-                                    // print(con.selectedVariant!.id);
                                   },
                                 ),
                               ),
