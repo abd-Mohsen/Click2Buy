@@ -1,5 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:test1/constants.dart';
 import 'package:test1/themes.dart';
 import 'package:test1/controllers/cart_controller.dart';
@@ -125,30 +126,35 @@ class HomeView extends StatelessWidget {
         ),
 
         bottomNavigationBar: GetBuilder<HomeController>(
-          builder: (con) => CurvedNavigationBar(
-            items: [
-              Icon(
-                Icons.settings,
-                color: cs.onSurface,
-                size: 27,
+          builder: (con) => GNav(
+            tabs: [
+              GButton(
+                icon: Icons.settings,
+                text: "settings".tr,
               ),
-              Icon(
-                Icons.home,
-                color: cs.onSurface,
-                size: 27,
+              GButton(
+                icon: Icons.home_filled,
+                text: "home".tr,
               ),
-              Icon(
-                Icons.category_outlined,
-                color: cs.onSurface,
-                size: 27,
+              GButton(
+                icon: Icons.category_rounded,
+                text: "categories".tr,
               ),
             ],
-            height: 55,
-            index: con.selectedIndex,
-            backgroundColor: Colors.transparent,
-            color: !Get.isDarkMode ? Colors.grey.shade200 : cs.surface,
-            animationDuration: const Duration(milliseconds: 250),
-            onTap: (i) => con.changeTab(i),
+            textStyle: kTextStyle18.copyWith(color: cs.onPrimary),
+            tabMargin: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+            // rippleColor: Colors.grey[900]!,
+            // hoverColor: Colors.grey[900]!,
+            gap: 8,
+            activeColor: cs.onPrimary,
+            iconSize: 30,
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+            tabBackgroundColor: cs.primary,
+            selectedIndex: con.selectedIndex,
+            backgroundColor: !Get.isDarkMode ? Colors.grey.shade200 : cs.surface,
+            color: cs.onSurface,
+            duration: const Duration(milliseconds: 250),
+            onTabChange: (i) => con.changeTab(i),
           ),
         ),
       ),
