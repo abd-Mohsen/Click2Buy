@@ -43,9 +43,8 @@ class _CategoryViewState extends State<CategoryView> {
   bool get isLoadingSubCategory => _isLoadingSubCategory;
 
   void setLoadingSubCategory(bool val) {
-    _isLoadingSubCategory = val;
     setState(() {
-      //
+      _isLoadingSubCategory = val;
     });
   }
 
@@ -53,9 +52,8 @@ class _CategoryViewState extends State<CategoryView> {
   bool get isFetchedSubCat => _isFetchedSubCat;
 
   void setFetchedSubCategory(bool val) {
-    _isFetchedSubCat = val;
     setState(() {
-      //
+      _isFetchedSubCat = val;
     });
   }
 
@@ -120,58 +118,61 @@ class _CategoryViewState extends State<CategoryView> {
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
-            child: Stack(
-              children: [
-                ClipRect(
-                  child: SizedBox(
-                    height: 200,
-                    width: MediaQuery.of(context).size.width,
-                    child: Hero(
-                      tag: widget.heroTag,
-                      child: CachedNetworkImage(
-                        imageUrl: "$kHostIP/storage/${widget.category.photo}",
-                        fit: BoxFit.cover,
-                        httpHeaders: kImageHeaders,
-                        placeholder: (context, url) => SpinKitFadingCircle(
-                          color: cs.primary,
-                          size: 30,
-                          duration: const Duration(milliseconds: 1000),
+            child: ImageFiltered(
+              imageFilter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
+              child: Stack(
+                children: [
+                  ClipRect(
+                    child: SizedBox(
+                      height: 200,
+                      width: MediaQuery.of(context).size.width,
+                      child: Hero(
+                        tag: widget.heroTag,
+                        child: CachedNetworkImage(
+                          imageUrl: "$kHostIP/storage/${widget.category.photo}",
+                          fit: BoxFit.cover,
+                          httpHeaders: kImageHeaders,
+                          placeholder: (context, url) => SpinKitFadingCircle(
+                            color: cs.primary,
+                            size: 30,
+                            duration: const Duration(milliseconds: 1000),
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-                Positioned.fill(
-                  bottom: 0,
-                  child: BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 0, sigmaY: 0),
-                    child: Container(
-                      color: cs.background.withOpacity(0.1),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  bottom: 0,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      widget.category.name,
-                      style: kTextStyle20.copyWith(
-                        color: Colors.white,
-                        shadows: [
-                          const Shadow(
-                            color: Colors.black,
-                            offset: Offset(1, 1),
-                            blurRadius: 3,
-                          ),
-                        ],
+                  Positioned.fill(
+                    bottom: 0,
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 0, sigmaY: 0),
+                      child: Container(
+                        color: cs.background.withOpacity(0.1),
                       ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                ),
-              ],
+                  Positioned(
+                    bottom: 0,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        widget.category.name,
+                        style: kTextStyle30Bold.copyWith(
+                          color: Colors.white,
+                          shadows: [
+                            const Shadow(
+                              color: Colors.black,
+                              offset: Offset(2, 2),
+                              blurRadius: 3,
+                            ),
+                          ],
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
 

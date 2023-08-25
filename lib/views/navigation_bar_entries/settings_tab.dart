@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:test1/components/auth_button.dart';
 import 'package:test1/controllers/home_controller.dart';
@@ -50,7 +51,7 @@ class SettingsTab extends StatelessWidget {
                                 baseColor: Colors.grey[600]!,
                                 highlightColor: Colors.grey[200]!,
                                 child: Container(
-                                  height: 30,
+                                  height: 35,
                                   width: 180,
                                   color: Colors.white,
                                 ),
@@ -62,7 +63,7 @@ class SettingsTab extends StatelessWidget {
                                 baseColor: Colors.grey[600]!,
                                 highlightColor: Colors.grey[200]!,
                                 child: Container(
-                                  height: 20,
+                                  height: 15,
                                   width: 80,
                                   color: Colors.white,
                                 ),
@@ -78,110 +79,6 @@ class SettingsTab extends StatelessWidget {
                             ),
                             backgroundColor: cs.surface,
                             collapsedBackgroundColor: cs.surface,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 16),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    ListTile(
-                                      leading: Icon(
-                                        Icons.mail,
-                                        color: cs.onBackground,
-                                      ),
-                                      title: Text("email".tr),
-                                      subtitle: Text(
-                                        con.currentUser[0].email,
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 1,
-                                      ),
-                                    ),
-                                    ListTile(
-                                      leading: Icon(
-                                        Icons.phone_android,
-                                        color: cs.onBackground,
-                                      ),
-                                      title: Text("phone".tr),
-                                      subtitle: Text(
-                                        con.currentUser[0].phone,
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 1,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 4),
-                                      child: Center(
-                                        child: TextButton(
-                                          onPressed: () {
-                                            Get.dialog(
-                                              AlertDialog(
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius: BorderRadius.circular(10),
-                                                ),
-                                                title: Text(
-                                                  "${"please enter your password first".tr}:",
-                                                  style: kTextStyle18,
-                                                ),
-                                                content: Form(
-                                                  key: con.settingKey,
-                                                  child: GetBuilder<HomeController>(
-                                                    builder: (con) => AuthField(
-                                                      textController: password,
-                                                      keyboardType: TextInputType.text,
-                                                      obscure: !con.passwordVisible,
-                                                      hintText: "password".tr,
-                                                      label: "password",
-                                                      prefixIconData: Icons.lock_outline,
-                                                      suffixIconData: con.passwordVisible
-                                                          ? CupertinoIcons.eye_slash
-                                                          : CupertinoIcons.eye,
-                                                      onIconPress: () {
-                                                        con.togglePasswordVisibility(!con.passwordVisible);
-                                                      },
-                                                      validator: (val) {
-                                                        return validateInput(password.text, 4, 50, "password");
-                                                      },
-                                                      onChanged: (val) {
-                                                        if (con.buttonPressed) {
-                                                          con.settingKey.currentState!.validate();
-                                                        }
-                                                      },
-                                                    ),
-                                                  ),
-                                                ),
-                                                actions: [
-                                                  Padding(
-                                                    padding: const EdgeInsets.only(bottom: 20),
-                                                    child: GetBuilder<HomeController>(
-                                                      builder: (con) => AuthButton(
-                                                        onTap: () {
-                                                          hideKeyboard(context);
-                                                          con.confirmPassword(password.text);
-                                                        },
-                                                        widget: con.isLoadingConfirmPassword
-                                                            ? SpinKitThreeBounce(color: cs.onPrimary, size: 24)
-                                                            : Text(
-                                                                "submit".tr,
-                                                                style: kTextStyle16Bold.copyWith(color: cs.onPrimary),
-                                                              ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            );
-                                          },
-                                          child: Text(
-                                            "edit".tr,
-                                            style: kTextStyle22.copyWith(color: cs.primary),
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ],
                           ),
                         ),
                       );
@@ -415,11 +312,21 @@ class SettingsTab extends StatelessWidget {
             ),
             trailing: GetBuilder<ThemeController>(
               init: ThemeController(),
-              builder: (con) => Switch(
+              builder: (con) => LiteRollingSwitch(
+                width: 90,
+                textOffColor: cs.onPrimary,
+                textOnColor: cs.onPrimary,
                 value: con.switchValue,
+                iconOn: Icons.nightlight,
+                colorOff: cs.primary,
+                colorOn: cs.primary,
+                iconOff: CupertinoIcons.sun_min,
                 onChanged: (bool value) {
                   con.updateTheme(value);
                 },
+                onDoubleTap: () {},
+                onTap: () {},
+                onSwipe: () {},
               ),
             ),
           ),
@@ -486,8 +393,7 @@ class SettingsTab extends StatelessWidget {
                     style: kTextStyle20.copyWith(color: cs.error),
                   ),
                   onTap: () {
-                    //delete token and end session
-                    //clear cart
+                    //clear cart ?
                     hC.logOut();
                   },
                 )

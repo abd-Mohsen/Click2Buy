@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:test1/components/category_card.dart';
@@ -11,7 +10,7 @@ class CategoriesTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     HomeController hC = Get.find();
-    ColorScheme cs = Theme.of(context).colorScheme;
+    //ColorScheme cs = Theme.of(context).colorScheme;
     return RefreshIndicator(
       onRefresh: hC.refreshParentsCategories,
       child: Column(
