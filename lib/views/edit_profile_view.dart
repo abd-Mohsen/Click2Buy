@@ -47,7 +47,7 @@ class EditProfileView extends StatelessWidget {
                   AuthField(
                     textController: name,
                     keyboardType: TextInputType.name,
-                    obscure: false,
+                    //obscure: false,
                     hintText: "name".tr,
                     label: "",
                     prefixIconData: Icons.person_outline,
@@ -62,7 +62,7 @@ class EditProfileView extends StatelessWidget {
                   AuthField(
                     textController: phone,
                     keyboardType: TextInputType.phone,
-                    obscure: false,
+                    //obscure: false,
                     hintText: "phone".tr,
                     label: "",
                     prefixIconData: Icons.phone,

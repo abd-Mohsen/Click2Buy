@@ -9,16 +9,8 @@ import '../components/auth_button.dart';
 import '../components/auth_field.dart';
 import '../constants.dart';
 
-class RegisterPage extends StatelessWidget {
-  RegisterPage({super.key});
-
-  final email = TextEditingController();
-  final password = TextEditingController();
-  final rePassword = TextEditingController();
-  final fName = TextEditingController();
-  final lName = TextEditingController();
-  final phone = TextEditingController();
-  //final address = TextEditingController();
+class RegisterView extends StatelessWidget {
+  const RegisterView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -56,14 +48,14 @@ class RegisterPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 25),
                     AuthField(
-                      textController: fName,
+                      textController: rC.fName,
                       keyboardType: TextInputType.name,
-                      obscure: false,
+                      //obscure: false,
                       hintText: "first name (in english)".tr,
                       label: "",
                       prefixIconData: Icons.person_outline,
                       validator: (val) {
-                        return validateInput(fName.text, 4, 15, "username");
+                        return validateInput(rC.fName.text, 4, 15, "username");
                       },
                       onChanged: (val) {
                         if (rC.buttonPressed) rC.registerFormKey.currentState!.validate();
@@ -71,9 +63,9 @@ class RegisterPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     AuthField(
-                      textController: lName,
+                      textController: rC.lName,
                       keyboardType: TextInputType.name,
-                      obscure: false,
+                      //obscure: false,
                       hintText: "last name(optional)".tr,
                       label: "",
                       prefixIconData: Icons.person,
@@ -87,14 +79,14 @@ class RegisterPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     AuthField(
-                      textController: email,
+                      textController: rC.email,
                       keyboardType: TextInputType.emailAddress,
-                      obscure: false,
+                      //obscure: false,
                       hintText: "email".tr,
                       label: "email",
                       prefixIconData: Icons.email_outlined,
                       validator: (val) {
-                        return validateInput(email.text, 4, 100, "email");
+                        return validateInput(rC.email.text, 4, 100, "email");
                       },
                       onChanged: (val) {
                         if (rC.buttonPressed) rC.registerFormKey.currentState!.validate();
@@ -103,7 +95,7 @@ class RegisterPage extends StatelessWidget {
                     const SizedBox(height: 10),
                     GetBuilder<RegisterController>(
                       builder: (con) => AuthField(
-                        textController: password,
+                        textController: rC.password,
                         keyboardType: TextInputType.text,
                         obscure: !con.passwordVisible,
                         hintText: "password".tr,
@@ -114,7 +106,7 @@ class RegisterPage extends StatelessWidget {
                           con.togglePasswordVisibility(!con.passwordVisible);
                         },
                         validator: (val) {
-                          return validateInput(password.text, 4, 50, "password");
+                          return validateInput(rC.password.text, 4, 50, "password");
                         },
                         onChanged: (val) {
                           if (con.buttonPressed) con.registerFormKey.currentState!.validate();
@@ -124,7 +116,7 @@ class RegisterPage extends StatelessWidget {
                     const SizedBox(height: 10),
                     GetBuilder<RegisterController>(
                       builder: (con) => AuthField(
-                        textController: rePassword,
+                        textController: rC.rePassword,
                         keyboardType: TextInputType.text,
                         obscure: !con.rePasswordVisible,
                         hintText: "re enter password".tr,
@@ -135,7 +127,8 @@ class RegisterPage extends StatelessWidget {
                           con.toggleRePasswordVisibility(!con.rePasswordVisible);
                         },
                         validator: (val) {
-                          return validateInput(rePassword.text, 4, 50, "password");
+                          return validateInput(rC.rePassword.text, 4, 50, "password",
+                              pass: rC.password.text, rePass: rC.rePassword.text);
                         },
                         onChanged: (val) {
                           if (con.buttonPressed) con.registerFormKey.currentState!.validate();
@@ -146,11 +139,10 @@ class RegisterPage extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 25),
                       child: IntlPhoneField(
-                        controller: phone,
-                        //todo: find a way to not let user write weird names
+                        controller: rC.phone,
                         //todo: validator isn't working well with phone field
                         validator: (val) {
-                          return validateInput(phone.text, 9, 10, "phone");
+                          return validateInput(rC.phone.text, 9, 10, "phone");
                         },
                         onChanged: (val) {
                           if (rC.buttonPressed) rC.registerFormKey.currentState!.validate();
@@ -174,20 +166,6 @@ class RegisterPage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 10),
-                    // AuthField(
-                    //   textController: address,
-                    //   keyboardType: TextInputType.streetAddress,
-                    //   obscure: false,
-                    //   hintText: "address".tr,
-                    //   label: "",
-                    //   prefixIconData: Icons.location_pin,
-                    //   validator: (val) {
-                    //     return validateInput(address.text, 4, 15, "address");
-                    //   },
-                    //   onChanged: (val) {
-                    //     if (rC.buttonPressed) rC.registerFormKey.currentState!.validate();
-                    //   },
-                    // ),
                     const SizedBox(height: 25),
                     GetBuilder<RegisterController>(
                       builder: (con) => AuthButton(
@@ -198,13 +176,13 @@ class RegisterPage extends StatelessWidget {
                                 style: kTextStyle16Bold.copyWith(color: cs.onPrimary),
                               ),
                         onTap: () {
-                          if (password.text == rePassword.text) {
-                            con.toggleTimerState(false);
-                            con.register(email.text, password.text, fName.text, lName.text, phone.text);
-                            hideKeyboard(context);
-                          } else {
-                            Get.defaultDialog(middleText: "passwords are not matched");
-                          }
+                          //if (password.text == rePassword.text) {
+                          con.toggleTimerState(false);
+                          con.register();
+                          hideKeyboard(context);
+                          // } else {
+                          //   Get.defaultDialog(middleText: "passwords are not matched");
+                          // }
                         },
                       ),
                     ),
@@ -219,7 +197,7 @@ class RegisterPage extends StatelessWidget {
                         const SizedBox(width: 4),
                         GestureDetector(
                           onTap: () {
-                            Get.off(() => LoginPage());
+                            Get.off(() => const LoginPage());
                           },
                           child: Text(
                             'Login now'.tr,

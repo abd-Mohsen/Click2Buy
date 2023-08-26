@@ -14,7 +14,7 @@ class AuthField extends StatelessWidget {
     this.validator,
     required this.label,
     required this.onChanged,
-    required this.obscure,
+    this.obscure,
   });
 
   final TextEditingController textController;
@@ -24,7 +24,7 @@ class AuthField extends StatelessWidget {
   final IconData? prefixIconData;
   final IconData? suffixIconData;
   final void Function()? onIconPress;
-  final bool obscure;
+  final bool? obscure;
   final String? Function(String?)? validator;
   final void Function(String) onChanged;
 
@@ -39,7 +39,7 @@ class AuthField extends StatelessWidget {
         keyboardType: keyboardType,
         style: kTextStyle14.copyWith(color: Colors.black),
         onChanged: onChanged,
-        obscureText: obscure,
+        obscureText: obscure ?? false,
         decoration: InputDecoration(
           //floatingLabelBehavior: FloatingLabelBehavior.always,
           //label: Text(label),
@@ -61,7 +61,7 @@ class AuthField extends StatelessWidget {
   }
 }
 
-String? validateInput(String val, int min, int max, String type) {
+String? validateInput(String val, int min, int max, String type, {String pass = "", String rePass = ""}) {
   //todo: localize
   if (val.trim().isEmpty) return "cant be empty";
 
@@ -77,6 +77,8 @@ String? validateInput(String val, int min, int max, String type) {
   if (val.length < min) return "value cant be smaller than $min";
 
   if (val.length > max) return "value cant be greater than $max";
+
+  if (pass != rePass) return "passwords don't match".tr;
 
   return null;
 }

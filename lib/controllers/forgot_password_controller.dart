@@ -11,8 +11,18 @@ import '../views/forgot_password_page2.dart';
 import '../views/login_page.dart';
 
 class ForgotPasswordController extends GetxController {
-  //for first screen
-  late String _email;
+  @override
+  void onClose() {
+    // email.dispose();
+    // newPassword.dispose();
+    // rePassword.dispose();
+    super.onClose();
+  }
+
+  final email = TextEditingController();
+  final newPassword = TextEditingController();
+  final rePassword = TextEditingController();
+
   bool _isLoading1 = false;
   bool get isLoading1 => _isLoading1;
   GlobalKey<FormState> firstFormKey = GlobalKey<FormState>();
@@ -23,23 +33,19 @@ class ForgotPasswordController extends GetxController {
     update();
   }
 
-  Future toOtp(String email) async {
+  Future toOtp() async {
     button1Pressed = true;
     bool isValid = firstFormKey.currentState!.validate();
     if (isValid) {
-      _email = email;
       toggleLoading1(true);
       try {
-        if (await RemoteServices.sendForgotPasswordOtp(email).timeout(kTimeOutDuration)) {
+        if (await RemoteServices.sendForgotPasswordOtp(email.text).timeout(kTimeOutDuration)) {
           Get.to(() => const ForgotPasswordOTPScreen());
         }
       } on TimeoutException {
-        Get.defaultDialog(
-            title: "error".tr,
-            middleText: "operation is taking so long, please check your internet "
-                "connection or try again later.");
+        kTimeOutDialog();
       } catch (e) {
-        print(e.toString());
+        //print(e.toString());
       } finally {
         toggleLoading1(false);
       }
@@ -73,20 +79,18 @@ class ForgotPasswordController extends GetxController {
     } else {
       toggleLoadingOtp(true);
       try {
-        ResetPassModel model = (await RemoteServices.verifyForgotPasswordOtp(_email, pin).timeout(kTimeOutDuration))!;
+        ResetPassModel model =
+            (await RemoteServices.verifyForgotPasswordOtp(email.text, pin).timeout(kTimeOutDuration))!;
         if (model.status) {
           _resetToken = model.resetToken;
-          Get.off(() => ForgotPasswordPage2());
+          Get.off(() => const ForgotPasswordPage2());
         } else {
           Get.defaultDialog(middleText: "wrong otp dialog".tr);
         }
       } on TimeoutException {
-        Get.defaultDialog(
-            title: "error".tr,
-            middleText: "operation is taking so long, please check your internet "
-                "connection or try again later.");
+        kTimeOutDialog();
       } catch (e) {
-        print(e.toString());
+        //print(e.toString());
       } finally {
         toggleLoadingOtp(false);
       }
@@ -97,18 +101,15 @@ class ForgotPasswordController extends GetxController {
     if (_isTimeUp) {
       toggleLoadingOtp(true);
       try {
-        await RemoteServices.sendForgotPasswordOtp(_email).timeout(kTimeOutDuration);
+        await RemoteServices.sendForgotPasswordOtp(email.text).timeout(kTimeOutDuration);
         timeController.restart();
         otpController.clear();
         _isTimeUp = false;
         //update();
       } on TimeoutException {
-        Get.defaultDialog(
-            title: "error".tr,
-            middleText: "operation is taking so long, please check your internet "
-                "connection or try again later.");
+        kTimeOutDialog();
       } catch (e) {
-        print(e.toString());
+        //print(e.toString());
       } finally {
         toggleLoadingOtp(false);
       }
@@ -161,17 +162,14 @@ class ForgotPasswordController extends GetxController {
     if (isValid) {
       toggleLoading2(true);
       try {
-        if (await RemoteServices.resetPassword(_email, password, _resetToken).timeout(kTimeOutDuration)) {
-          Get.offAll(() => LoginPage());
+        if (await RemoteServices.resetPassword(email.text, password, _resetToken).timeout(kTimeOutDuration)) {
+          Get.offAll(() => const LoginPage());
           Get.defaultDialog(middleText: "reset pass dialog".tr);
         }
       } on TimeoutException {
-        Get.defaultDialog(
-            title: "error".tr,
-            middleText: "operation is taking so long, please check your internet "
-                "connection or try again later.");
+        kTimeOutDialog();
       } catch (e) {
-        print(e.toString());
+        //print(e.toString());
       } finally {
         toggleLoading2(false);
       }

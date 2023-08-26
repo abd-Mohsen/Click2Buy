@@ -8,9 +8,7 @@ import '../controllers/forgot_password_controller.dart';
 
 ///to enter the email for the account you want to reset its password
 class ForgotPasswordPage1 extends StatelessWidget {
-  ForgotPasswordPage1({super.key});
-
-  final email = TextEditingController();
+  const ForgotPasswordPage1({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -45,14 +43,14 @@ class ForgotPasswordPage1 extends StatelessWidget {
                 Form(
                   key: fC.firstFormKey,
                   child: AuthField(
-                    textController: email,
+                    textController: fC.email,
                     keyboardType: TextInputType.emailAddress,
-                    obscure: false,
+                    //obscure: false,
                     hintText: "email".tr,
                     label: "email",
                     prefixIconData: Icons.email_outlined,
                     validator: (val) {
-                      return validateInput(email.text, 4, 100, "email");
+                      return validateInput(fC.email.text, 4, 100, "email");
                     },
                     onChanged: (val) {
                       if (fC.button1Pressed) fC.firstFormKey.currentState!.validate();
@@ -71,7 +69,7 @@ class ForgotPasswordPage1 extends StatelessWidget {
                           ),
                     onTap: () {
                       fC.toggleTimerState(false);
-                      fC.toOtp(email.text.trim());
+                      fC.toOtp();
                       hideKeyboard(context);
                     },
                   ),

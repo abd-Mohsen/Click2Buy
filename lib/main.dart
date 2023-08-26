@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -40,6 +39,8 @@ void main() async {
 // todo: make a twitter like snack_bars (one for home and one for inner pages)
 //todo:make banners with fixed height and width
 // todo: make banners sliver
+// todo: error when disposing text controllers in getX controllers
+// todo: not receiving otp via email
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

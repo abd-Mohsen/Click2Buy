@@ -9,6 +9,24 @@ import '../views/login_page.dart';
 import '../views/register_otp_screen.dart';
 
 class RegisterController extends GetxController {
+  @override
+  void onClose() {
+    // email.dispose();
+    // password.dispose();
+    // rePassword.dispose();
+    // fName.dispose();
+    // lName.dispose();
+    // phone.dispose();
+    super.onClose();
+  }
+
+  final email = TextEditingController();
+  final password = TextEditingController();
+  final rePassword = TextEditingController();
+  final fName = TextEditingController();
+  final lName = TextEditingController();
+  final phone = TextEditingController();
+
   GlobalKey<FormState> registerFormKey = GlobalKey<FormState>();
   bool buttonPressed = false;
   bool _isLoadingRegister = false;
@@ -34,23 +52,22 @@ class RegisterController extends GetxController {
   }
 
   //todo: cant get to otp page after timed out (email is already taken)
-  Future register(String email, String password, String fName, String lName, String phone) async {
+  Future register() async {
     buttonPressed = true;
     bool isValid = registerFormKey.currentState!.validate();
     if (isValid) {
+      print(fName.text);
       toggleLoadingRegister(true);
       try {
         _registerToken =
-            (await RemoteServices.signUp(email, password, "$fName $lName", phone).timeout(kTimeOutDuration))!;
+            (await RemoteServices.signUp(email.text, password.text, "${fName.text} ${lName.text}", phone.text)
+                .timeout(kTimeOutDuration))!;
         _verifyUrl = (await RemoteServices.sendRegisterOtp(_registerToken).timeout(kTimeOutDuration))!;
         Get.to(() => const RegisterOTPScreen());
       } on TimeoutException {
-        Get.defaultDialog(
-            title: "error".tr,
-            middleText: "operation is taking so long, please check your internet "
-                "connection or try again later.");
+        kTimeOutDialog();
       } catch (e) {
-        print(e.toString());
+        //print(e.toString());
       } finally {
         toggleLoadingRegister(false);
       }
@@ -87,18 +104,15 @@ class RegisterController extends GetxController {
       toggleLoadingOtp(true);
       try {
         if (await RemoteServices.verifyRegisterOtp(_verifyUrl, _registerToken, pin).timeout(kTimeOutDuration)) {
-          Get.offAll(() => LoginPage());
+          Get.offAll(() => const LoginPage());
           Get.defaultDialog(middleText: "account created successfully, please login".tr);
         } else {
           Get.defaultDialog(middleText: "wrong otp dialog".tr);
         }
       } on TimeoutException {
-        Get.defaultDialog(
-            title: "error".tr,
-            middleText: "operation is taking so long, please check your internet "
-                "connection or try again later.");
+        kTimeOutDialog();
       } catch (e) {
-        print(e.toString());
+        //print(e.toString());
       } finally {
         toggleLoadingOtp(false);
       }
@@ -113,14 +127,10 @@ class RegisterController extends GetxController {
         timeController.restart();
         otpController.clear();
         _isTimeUp = false;
-        //update();
       } on TimeoutException {
-        Get.defaultDialog(
-            title: "error".tr,
-            middleText: "operation is taking so long, please check your internet "
-                "connection or try again later.");
+        kTimeOutDialog();
       } catch (e) {
-        print(e.toString());
+        //print(e.toString());
       } finally {
         toggleLoadingOtp(false);
       }

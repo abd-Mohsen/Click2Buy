@@ -4,17 +4,14 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:test1/controllers/login_controller.dart';
 import 'package:test1/views/home_view.dart';
 import 'package:get/get.dart';
-import 'package:test1/views/register_page.dart';
+import 'package:test1/views/register_view.dart';
 import '../components/auth_button.dart';
 import '../components/auth_field.dart';
 import '../constants.dart';
 import 'forgot_password_page1.dart';
 
 class LoginPage extends StatelessWidget {
-  LoginPage({super.key});
-
-  final email = TextEditingController();
-  final password = TextEditingController();
+  const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -51,14 +48,14 @@ class LoginPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 25),
                     AuthField(
-                      textController: email,
+                      textController: lC.email,
                       keyboardType: TextInputType.emailAddress,
-                      obscure: false,
+                      //obscure: false,
                       hintText: "email".tr,
                       label: "email",
                       prefixIconData: Icons.email_outlined,
                       validator: (val) {
-                        return validateInput(email.text, 4, 100, "email");
+                        return validateInput(lC.email.text, 4, 100, "email");
                       },
                       onChanged: (val) {
                         if (lC.buttonPressed) lC.loginFormKey.currentState!.validate();
@@ -67,7 +64,7 @@ class LoginPage extends StatelessWidget {
                     const SizedBox(height: 10),
                     GetBuilder<LoginController>(
                       builder: (con) => AuthField(
-                        textController: password,
+                        textController: lC.password,
                         keyboardType: TextInputType.text,
                         obscure: !con.passwordVisible,
                         hintText: "password".tr,
@@ -78,7 +75,7 @@ class LoginPage extends StatelessWidget {
                           con.togglePasswordVisibility(!con.passwordVisible);
                         },
                         validator: (val) {
-                          return validateInput(password.text, 4, 50, "password");
+                          return validateInput(lC.password.text, 4, 50, "password");
                         },
                         onChanged: (val) {
                           if (con.buttonPressed) con.loginFormKey.currentState!.validate();
@@ -113,7 +110,7 @@ class LoginPage extends StatelessWidget {
                                 style: kTextStyle16Bold.copyWith(color: cs.onPrimary),
                               ),
                         onTap: () {
-                          con.login(email.text, password.text);
+                          con.login();
                         },
                       ),
                     ),
@@ -152,7 +149,7 @@ class LoginPage extends StatelessWidget {
                         const SizedBox(width: 6),
                         GestureDetector(
                           onTap: () {
-                            Get.offAll(() => RegisterPage());
+                            Get.offAll(() => const RegisterView());
                           },
                           child: Text(
                             'Register now'.tr,

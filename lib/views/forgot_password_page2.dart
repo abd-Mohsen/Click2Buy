@@ -11,10 +11,7 @@ import '../controllers/forgot_password_controller.dart';
 
 ///if otp is correct , set a new password for the account with the email entered earlier
 class ForgotPasswordPage2 extends StatelessWidget {
-  ForgotPasswordPage2({super.key});
-
-  final newPassword = TextEditingController();
-  final rePassword = TextEditingController();
+  const ForgotPasswordPage2({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +44,7 @@ class ForgotPasswordPage2 extends StatelessWidget {
                   const SizedBox(height: 25),
                   GetBuilder<ForgotPasswordController>(
                     builder: (con) => AuthField(
-                      textController: newPassword,
+                      textController: fC.newPassword,
                       keyboardType: TextInputType.text,
                       obscure: !con.passwordVisible,
                       hintText: "enter a new password".tr,
@@ -58,7 +55,7 @@ class ForgotPasswordPage2 extends StatelessWidget {
                         con.togglePasswordVisibility(!con.passwordVisible);
                       },
                       validator: (val) {
-                        return validateInput(newPassword.text, 4, 50, "password");
+                        return validateInput(fC.newPassword.text, 4, 50, "password");
                       },
                       onChanged: (val) {
                         if (con.button2Pressed) con.secondFormKey.currentState!.validate();
@@ -68,7 +65,7 @@ class ForgotPasswordPage2 extends StatelessWidget {
                   const SizedBox(height: 10),
                   GetBuilder<ForgotPasswordController>(
                     builder: (con) => AuthField(
-                      textController: rePassword,
+                      textController: fC.rePassword,
                       keyboardType: TextInputType.text,
                       obscure: !con.rePasswordVisible,
                       hintText: "re enter password".tr,
@@ -79,7 +76,8 @@ class ForgotPasswordPage2 extends StatelessWidget {
                         con.toggleRePasswordVisibility(!con.rePasswordVisible);
                       },
                       validator: (val) {
-                        return validateInput(rePassword.text, 4, 50, "password");
+                        return validateInput(fC.rePassword.text, 4, 50, "password",
+                            pass: fC.newPassword.text, rePass: fC.rePassword.text);
                       },
                       onChanged: (val) {
                         if (con.button2Pressed) con.secondFormKey.currentState!.validate();
@@ -96,12 +94,12 @@ class ForgotPasswordPage2 extends StatelessWidget {
                               style: kTextStyle16Bold.copyWith(color: cs.onPrimary),
                             ),
                       onTap: () {
-                        if (newPassword.text == rePassword.text) {
-                          fC.resetPass(newPassword.text);
-                          hideKeyboard(context);
-                        } else {
-                          Get.defaultDialog(middleText: "not matched");
-                        }
+                        //if (newPassword.text == rePassword.text) {
+                        fC.resetPass(fC.newPassword.text);
+                        hideKeyboard(context);
+                        // } else {
+                        //   Get.defaultDialog(middleText: "not matched");
+                        // }
                       },
                     ),
                   ),

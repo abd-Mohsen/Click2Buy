@@ -9,6 +9,16 @@ import '../views/home_view.dart';
 class LoginController extends GetxController {
   final _getStorage = GetStorage(); //local storage instance
 
+  @override
+  void onClose() {
+    // email.dispose();
+    // password.dispose();
+    super.onClose();
+  }
+
+  final email = TextEditingController();
+  final password = TextEditingController();
+
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
@@ -27,21 +37,18 @@ class LoginController extends GetxController {
     update();
   }
 
-  void login(String email, String password) async {
+  void login() async {
     buttonPressed = true;
     bool isValid = loginFormKey.currentState!.validate();
     if (isValid) {
       toggleLoading(true);
       try {
-        String? accessToken = await RemoteServices.signUserIn(email, password).timeout(kTimeOutDuration);
+        String? accessToken = await RemoteServices.signUserIn(email.text, password.text).timeout(kTimeOutDuration);
         if (accessToken == null) throw Exception();
         _getStorage.write("token", accessToken); // todo: repeat this for all pages we have issues with
         Get.offAll(() => const HomeView());
       } on TimeoutException {
-        Get.defaultDialog(
-            title: "error".tr,
-            middleText: "operation is taking so long, please check your internet "
-                "connection or try again later.");
+        kTimeOutDialog();
       } catch (e) {
         //print(e.toString());
       } finally {
