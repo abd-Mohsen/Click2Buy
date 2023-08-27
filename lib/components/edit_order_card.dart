@@ -83,32 +83,33 @@ class EditOrderCard extends StatelessWidget {
                     borderRadius:
                         const BorderRadius.only(bottomRight: Radius.circular(20), bottomLeft: Radius.circular(20))),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    // Padding(
-                    //     padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 8),
-                    //     child: Row(
-                    //       children: [
-                    //         IconButton(
-                    //           onPressed: decreaseCallback,
-                    //           icon: Icon(
-                    //             Icons.remove,
-                    //             color: variant.quantity == 1 ? cs.onSurface.withOpacity(0.3) : cs.primary,
-                    //           ),
-                    //         ),
-                    //         Text(
-                    //           quantity.toString(),
-                    //           style: kTextStyle26.copyWith(color: cs.onSurface),
-                    //         ),
-                    //         IconButton(
-                    //           onPressed: increaseCallback,
-                    //           icon: Icon(
-                    //             Icons.add,
-                    //             color: cs.primary,
-                    //           ),
-                    //         ),
-                    //       ],
-                    //     )),
+                    Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 8),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            IconButton(
+                              onPressed: decreaseCallback,
+                              icon: Icon(
+                                Icons.remove,
+                                color: variant.quantity == 1 ? cs.onSurface.withOpacity(0.3) : cs.primary,
+                              ),
+                            ),
+                            Text(
+                              quantity.toString(),
+                              style: kTextStyle26.copyWith(color: cs.onSurface),
+                            ),
+                            IconButton(
+                              onPressed: increaseCallback,
+                              icon: Icon(
+                                Icons.add,
+                                color: cs.primary,
+                              ),
+                            ),
+                          ],
+                        )),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 12),
                       child: Text(

@@ -127,6 +127,7 @@ class EditOrderController extends GetxController {
   Future<void> updateQuantity() async {
     //todo loop over the response
     //todo update quantity
+    //todo make form validator for search drop down
     update();
   }
 

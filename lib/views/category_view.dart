@@ -103,23 +103,23 @@ class _CategoryViewState extends State<CategoryView> {
           },
         ),
         actions: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: GestureDetector(
-              child: Icon(
-                Icons.info_outline_rounded,
-                size: 30,
-                color: cs.error,
-              ),
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.all(8.0),
+          //   child: GestureDetector(
+          //     child: Icon(
+          //       Icons.info_outline_rounded,
+          //       size: 30,
+          //       color: cs.error,
+          //     ),
+          //   ),
+          // ),
         ],
       ),
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
             child: ImageFiltered(
-              imageFilter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
+              imageFilter: ImageFilter.blur(sigmaX: 0.5, sigmaY: 0.5),
               child: Stack(
                 children: [
                   ClipRect(

@@ -67,134 +67,130 @@ class EditOrderView extends StatelessWidget {
       ),
       backgroundColor: cs.background,
       body: GetBuilder<EditOrderController>(
-        builder: (con) => Scrollbar(
-          thumbVisibility: true,
-          child: ListView(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: DropdownSearch<CompanyModel>(
-                  popupProps: PopupProps.menu(
-                    showSearchBox: true,
-                    searchFieldProps: TextFieldProps(
-                      decoration: InputDecoration(
-                        fillColor: Colors.white70,
-                        hintText: "search".tr,
-                        prefix: Padding(
-                          padding: const EdgeInsets.all(4),
-                          child: Icon(Icons.search, color: cs.onSurface),
-                        ),
+        builder: (con) => Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              child: DropdownSearch<CompanyModel>(
+                popupProps: PopupProps.menu(
+                  showSearchBox: true,
+                  searchFieldProps: TextFieldProps(
+                    decoration: InputDecoration(
+                      fillColor: Colors.white70,
+                      hintText: "search".tr,
+                      prefix: Padding(
+                        padding: const EdgeInsets.all(4),
+                        child: Icon(Icons.search, color: cs.onSurface),
                       ),
                     ),
                   ),
-                  dropdownDecoratorProps: DropDownDecoratorProps(
-                    dropdownSearchDecoration: InputDecoration(
-                      labelText: "delivery company".tr,
-                      labelStyle: kTextStyle18,
-                      hintText: "choose a company".tr,
-                      icon: const Icon(Icons.local_shipping),
-                    ),
-                  ),
-                  items: con.companies,
-                  itemAsString: (CompanyModel c) => c.name,
-                  onChanged: (CompanyModel? company) {
-                    con.setCompany(company!);
-                  },
-                  enabled: !con.enabled,
                 ),
+                dropdownDecoratorProps: DropDownDecoratorProps(
+                  dropdownSearchDecoration: InputDecoration(
+                    labelText: "delivery company".tr,
+                    labelStyle: kTextStyle18,
+                    hintText: "choose a company".tr,
+                    icon: const Icon(Icons.local_shipping),
+                  ),
+                ),
+                items: con.companies,
+                itemAsString: (CompanyModel c) => c.name,
+                onChanged: (CompanyModel? company) {
+                  con.setCompany(company!);
+                },
+                enabled: !con.enabled,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: DropdownSearch<AddressModel>(
-                  popupProps: PopupProps.menu(
-                    showSearchBox: true,
-                    searchFieldProps: TextFieldProps(
-                      decoration: InputDecoration(
-                        fillColor: Colors.white70,
-                        hintText: "search".tr,
-                        prefix: Padding(
-                          padding: const EdgeInsets.all(4),
-                          child: Icon(Icons.search, color: cs.onSurface),
-                        ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4),
+              child: DropdownSearch<AddressModel>(
+                popupProps: PopupProps.menu(
+                  showSearchBox: true,
+                  searchFieldProps: TextFieldProps(
+                    decoration: InputDecoration(
+                      fillColor: Colors.white70,
+                      hintText: "search".tr,
+                      prefix: Padding(
+                        padding: const EdgeInsets.all(4),
+                        child: Icon(Icons.search, color: cs.onSurface),
                       ),
                     ),
                   ),
-                  dropdownDecoratorProps: DropDownDecoratorProps(
-                    dropdownSearchDecoration: InputDecoration(
-                      labelText: "company address".tr,
-                      hintText: "choose an address".tr,
-                      labelStyle: kTextStyle18,
-                      icon: const Icon(Icons.location_pin),
-                    ),
-                  ),
-                  items: con.addresses,
-                  itemAsString: (AddressModel a) => a.address[0],
-                  onChanged: (AddressModel? a) {
-                    con.setAddress(a!);
-                  },
-                  enabled: con.enabled,
-                  validator: (AddressModel? a) {
-                    if (a == null) {
-                      return "Required field".tr;
-                    } else if (!con.enabled) {
-                      return "choose the company first".tr;
-                    } else {
-                      return null;
-                    }
-                  },
                 ),
-              ),
-              SizedBox(
-                height: 400,
-                child: Scrollbar(
-                  child: ListView.builder(
-                    itemCount: order.variants.length,
-                    itemBuilder: (context, i) => EditOrderCard(
-                      variant: order.variants[i],
-                      deleteCallback: () {
-                        con.delete(order.variants[i]);
-                      },
-                      increaseCallback: () {
-                        //con.increase(order.variants[i]);
-                      },
-                      decreaseCallback: () {
-                        //con.decrease(order.variants[i]);
-                      },
-                      quantity: con.currentQuantity[order.variants[i]] ?? order.variants[i].quantity,
-                    ),
+                dropdownDecoratorProps: DropDownDecoratorProps(
+                  dropdownSearchDecoration: InputDecoration(
+                    labelText: "company address".tr,
+                    hintText: "choose an address".tr,
+                    labelStyle: kTextStyle18,
+                    icon: const Icon(Icons.location_pin),
                   ),
                 ),
+                items: con.addresses,
+                itemAsString: (AddressModel a) => a.address[0],
+                onChanged: (AddressModel? a) {
+                  con.setAddress(a!);
+                },
+                enabled: con.enabled,
+                validator: (AddressModel? a) {
+                  if (a == null) {
+                    return "Required field".tr;
+                  } else if (!con.enabled) {
+                    return "choose the company first".tr;
+                  } else {
+                    return null;
+                  }
+                },
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 20),
-                child: ElevatedButton(
-                  onPressed: () {
-                    con.selected
-                        ? con.editOrder()
-                        : Get.showSnackbar(GetSnackBar(
-                            messageText: Text(
-                              "choose company and address first".tr,
-                              textAlign: TextAlign.center,
-                              style: kTextStyle14.copyWith(color: Colors.white),
-                            ),
-                            backgroundColor: Colors.grey.shade800,
-                            duration: const Duration(milliseconds: 1500),
-                            borderRadius: 30,
-                            maxWidth: 200,
-                            margin: const EdgeInsets.only(bottom: 50),
-                          ));
-                  },
-                  child: con.isLoading
-                      ? Center(
-                          child: SpinKitSpinningLines(
-                          color: cs.onPrimary,
-                          size: 30,
-                        ))
-                      : Text("edit".tr, style: kTextStyle26),
+            ),
+            Expanded(
+              child: Scrollbar(
+                child: ListView.builder(
+                  itemCount: order.variants.length,
+                  itemBuilder: (context, i) => EditOrderCard(
+                    variant: order.variants[i],
+                    deleteCallback: () {
+                      con.delete(order.variants[i]);
+                    },
+                    increaseCallback: () {
+                      //con.increase(order.variants[i]);
+                    },
+                    decreaseCallback: () {
+                      //con.decrease(order.variants[i]);
+                    },
+                    quantity: con.currentQuantity[order.variants[i]] ?? order.variants[i].quantity,
+                  ),
                 ),
               ),
-            ],
-          ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+              child: ElevatedButton(
+                onPressed: () {
+                  con.selected
+                      ? con.editOrder()
+                      : Get.showSnackbar(GetSnackBar(
+                          messageText: Text(
+                            "choose company and address first".tr,
+                            textAlign: TextAlign.center,
+                            style: kTextStyle14.copyWith(color: Colors.white),
+                          ),
+                          backgroundColor: Colors.grey.shade800,
+                          duration: const Duration(milliseconds: 1500),
+                          borderRadius: 30,
+                          maxWidth: 200,
+                          margin: const EdgeInsets.only(bottom: 50),
+                        ));
+                },
+                child: con.isLoading
+                    ? Center(
+                        child: SpinKitSpinningLines(
+                        color: cs.onPrimary,
+                        size: 30,
+                      ))
+                    : Text("save changes".tr, style: kTextStyle26),
+              ),
+            ),
+          ],
         ),
       ),
     );

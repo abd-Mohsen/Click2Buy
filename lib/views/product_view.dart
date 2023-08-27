@@ -15,6 +15,7 @@ import '../constants.dart';
 import '../models/product_model.dart';
 
 //todo refresh this page alone and add it to cart
+//todo controller is taking long to initialize after deletion
 class ProductView extends StatelessWidget {
   final ProductModel product;
   final String heroTag;
@@ -211,8 +212,12 @@ class ProductView extends StatelessWidget {
                     child: Hero(
                       tag: heroTag,
                       child: GetBuilder<ProductController>(
+                        initState: (_) {
+                          // Delay the rendering of the page until the controller is fully initialized
+                          Get.find<ProductController>().onInit();
+                        },
                         builder: (con) => CachedNetworkImage(
-                          imageUrl: "$kHostIP/storage/${con.currentPicUrl ?? product.photos[0]}",
+                          imageUrl: "$kHostIP/storage/${con.currentPicUrl}",
                           fit: BoxFit.fill,
                           httpHeaders: const {'Connection': 'keep-alive'},
                           placeholder: (context, url) => Center(

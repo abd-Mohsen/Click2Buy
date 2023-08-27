@@ -23,7 +23,6 @@ void main() async {
 ///some self notes
 //todo: pagination
 //todo: localize all text
-
 //todo: about/contact us in settings
 //todo: for all network pics add a default image if its null
 
@@ -41,6 +40,8 @@ void main() async {
 // todo: make banners sliver
 // todo: error when disposing text controllers in getX controllers
 // todo: not receiving otp via email
+// todo: dismiss keyboard when scrolling a listview
+// todo: fix edit order and notifications
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

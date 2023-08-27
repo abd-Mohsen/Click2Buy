@@ -35,8 +35,8 @@ class HomeView extends StatelessWidget {
         extendBody: true,
         backgroundColor: cs.background,
         appBar: AppBar(
-          //elevation: 0,
-          backgroundColor: cs.surface,
+          elevation: 0,
+          backgroundColor: cs.background,
           title: Row(
             children: [
               Hero(
