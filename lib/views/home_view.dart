@@ -42,7 +42,7 @@ class HomeView extends StatelessWidget {
               Hero(
                 tag: "logo",
                 child: Image.asset(
-                  "assets/images/logo.png",
+                  Get.isDarkMode ? "assets/images/favi_dark.png" : "assets/images/favi_light.png",
                   height: 30,
                   width: 30,
                 ),

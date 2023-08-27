@@ -36,7 +36,7 @@ class LoginPage extends StatelessWidget {
                     Hero(
                       tag: "logo",
                       child: Image.asset(
-                        kLogoPath,
+                        Get.isDarkMode ? "assets/images/logo_dark.png" : "assets/images/logo_light.png",
                         height: MediaQuery.of(context).size.width / 2.5,
                         width: MediaQuery.of(context).size.width / 2.5,
                       ),

@@ -36,7 +36,7 @@ class RegisterView extends StatelessWidget {
                     Hero(
                       tag: "logo",
                       child: Image.asset(
-                        kLogoPath,
+                        Get.isDarkMode ? "assets/images/logo_dark.png" : "assets/images/logo_light.png",
                         height: MediaQuery.of(context).size.width / 2.7,
                         width: MediaQuery.of(context).size.width / 2.7,
                       ),

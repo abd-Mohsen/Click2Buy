@@ -19,9 +19,9 @@ class ForgotPasswordOTPScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Get.isDarkMode ? cs.background : Colors.grey[300],
         body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.center,
+          child: ListView(
+            // mainAxisAlignment: MainAxisAlignment.spaceAround,
+            // crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               GetBuilder<ForgotPasswordController>(
                 builder: (con) => Column(
@@ -46,14 +46,16 @@ class ForgotPasswordOTPScreen extends StatelessWidget {
                   ],
                 ),
               ),
+              const SizedBox(height: 32),
               Hero(
                 tag: "logo",
                 child: Image.asset(
-                  kLogoPath,
-                  height: MediaQuery.of(context).size.width / 5,
-                  width: MediaQuery.of(context).size.width / 5,
+                  Get.isDarkMode ? "assets/images/logo_dark.png" : "assets/images/logo_light.png",
+                  height: MediaQuery.of(context).size.width / 4,
+                  width: MediaQuery.of(context).size.width / 4,
                 ),
               ),
+              const SizedBox(height: 36),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25),
                 child: Text(
@@ -85,6 +87,7 @@ class ForgotPasswordOTPScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              const SizedBox(height: 40),
               GetBuilder<ForgotPasswordController>(
                 //todo: fix button stretch when loading
                 builder: (con) => Padding(
