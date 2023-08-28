@@ -312,22 +312,11 @@ class SettingsTab extends StatelessWidget {
             ),
             trailing: GetBuilder<ThemeController>(
               init: ThemeController(),
-              builder: (con) => LiteRollingSwitch(
-                //todo: not working with arabic remove it
-                width: 90,
-                textOffColor: cs.onPrimary,
-                textOnColor: cs.onPrimary,
+              builder: (con) => Switch(
                 value: con.switchValue,
-                iconOn: Icons.nightlight,
-                colorOff: cs.primary,
-                colorOn: cs.primary,
-                iconOff: CupertinoIcons.sun_min,
                 onChanged: (bool value) {
                   con.updateTheme(value);
                 },
-                onDoubleTap: () {},
-                onTap: () {},
-                onSwipe: () {},
               ),
             ),
           ),
