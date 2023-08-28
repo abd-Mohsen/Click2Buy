@@ -34,7 +34,7 @@ class EditProfileView extends StatelessWidget {
                 children: [
                   const SizedBox(height: 30),
                   Image.asset(
-                    kLogoPath,
+                    Get.isDarkMode ? "assets/images/logo_dark.png" : "assets/images/logo_light.png",
                     height: MediaQuery.of(context).size.width / 3,
                     width: MediaQuery.of(context).size.width / 3,
                   ),
@@ -119,17 +119,20 @@ class EditProfileView extends StatelessWidget {
                   ),
                   const SizedBox(height: 30),
                   GetBuilder<EditProfileController>(
-                    builder: (con) => AuthButton(
-                      widget: con.isLoadingEdit
-                          ? SpinKitThreeBounce(color: cs.onPrimary, size: 24)
-                          : Text(
-                              "Save".tr,
-                              style: kTextStyle16Bold.copyWith(color: cs.onPrimary),
-                            ),
-                      onTap: () {
-                        con.saveChanges(name.text, phone.text, password.text, newPassword.text);
-                        hideKeyboard(context);
-                      },
+                    builder: (con) => Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: AuthButton(
+                        widget: con.isLoadingEdit
+                            ? SpinKitThreeBounce(color: cs.onPrimary, size: 24)
+                            : Text(
+                                "Save".tr,
+                                style: kTextStyle16Bold.copyWith(color: cs.onPrimary),
+                              ),
+                        onTap: () {
+                          con.saveChanges(name.text, phone.text, password.text, newPassword.text);
+                          hideKeyboard(context);
+                        },
+                      ),
                     ),
                   ),
                 ],

@@ -313,6 +313,7 @@ class SettingsTab extends StatelessWidget {
             trailing: GetBuilder<ThemeController>(
               init: ThemeController(),
               builder: (con) => LiteRollingSwitch(
+                //todo: not working with arabic remove it
                 width: 90,
                 textOffColor: cs.onPrimary,
                 textOnColor: cs.onPrimary,

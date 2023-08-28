@@ -118,61 +118,58 @@ class _CategoryViewState extends State<CategoryView> {
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
-            child: ImageFiltered(
-              imageFilter: ImageFilter.blur(sigmaX: 0.5, sigmaY: 0.5),
-              child: Stack(
-                children: [
-                  ClipRect(
-                    child: SizedBox(
-                      height: 200,
-                      width: MediaQuery.of(context).size.width,
-                      child: Hero(
-                        tag: widget.heroTag,
-                        child: CachedNetworkImage(
-                          imageUrl: "$kHostIP/storage/${widget.category.photo}",
-                          fit: BoxFit.cover,
-                          httpHeaders: kImageHeaders,
-                          placeholder: (context, url) => SpinKitFadingCircle(
-                            color: cs.primary,
-                            size: 30,
-                            duration: const Duration(milliseconds: 1000),
+            child: Stack(
+              children: [
+                ClipRect(
+                  child: SizedBox(
+                    height: 200,
+                    width: MediaQuery.of(context).size.width,
+                    child: Hero(
+                      tag: widget.heroTag,
+                      child: CachedNetworkImage(
+                        imageUrl: "$kHostIP/storage/${widget.category.photo}",
+                        fit: BoxFit.cover,
+                        httpHeaders: kImageHeaders,
+                        placeholder: (context, url) => SpinKitFadingCircle(
+                          color: cs.primary,
+                          size: 30,
+                          duration: const Duration(milliseconds: 1000),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned.fill(
+                  bottom: 0,
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 0, sigmaY: 0),
+                    child: Container(
+                      color: cs.background.withOpacity(0.1),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  bottom: 0,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      widget.category.name,
+                      style: kTextStyle30Bold.copyWith(
+                        color: Colors.white,
+                        shadows: [
+                          const Shadow(
+                            color: Colors.black,
+                            offset: Offset(2, 2),
+                            blurRadius: 3,
                           ),
-                        ),
+                        ],
                       ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  Positioned.fill(
-                    bottom: 0,
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 0, sigmaY: 0),
-                      child: Container(
-                        color: cs.background.withOpacity(0.1),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    bottom: 0,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        widget.category.name,
-                        style: kTextStyle30Bold.copyWith(
-                          color: Colors.white,
-                          shadows: [
-                            const Shadow(
-                              color: Colors.black,
-                              offset: Offset(2, 2),
-                              blurRadius: 3,
-                            ),
-                          ],
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
 

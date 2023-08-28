@@ -11,6 +11,16 @@ class ProductController extends GetxController {
   ProductController({required this.product});
 
   final GetStorage _getStorage = GetStorage();
+  //bool isLoading = true;
+
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  //   Future.delayed(Duration(milliseconds: 600), () {
+  //     isLoading = false;
+  //     update();
+  //   });
+  // }
 
   int myRate = 0;
 

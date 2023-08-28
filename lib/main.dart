@@ -28,7 +28,6 @@ void main() async {
 
 //less important
 //todo: use secure storage for token
-//todo: try BLoC
 //todo: release apk /android apk analyzer/dart dev tools
 //todo: make an ios version
 //todo: responsive design
@@ -36,12 +35,13 @@ void main() async {
 //todo: change fonts for both ar and en
 //todo: optimize routes and controllers
 // todo: make a twitter like snack_bars (one for home and one for inner pages)
-//todo:make banners with fixed height and width
 // todo: make banners sliver
 // todo: error when disposing text controllers in getX controllers
 // todo: not receiving otp via email
 // todo: dismiss keyboard when scrolling a listview
 // todo: fix edit order and notifications
+// todo: fix otp pages layout and auto focus on otp field
+// todo: fix nav bar behavior with page view
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

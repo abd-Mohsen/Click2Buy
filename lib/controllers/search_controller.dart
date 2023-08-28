@@ -9,6 +9,7 @@ import '../models/product_model.dart';
 //todo: limit search history to latest 20 for example
 
 //todo: dispose controller after closing search page
+//todo: search products arent updating correctly
 
 class MySearchController extends GetxController {
   final _getStorage = GetStorage(); //local storage

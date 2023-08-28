@@ -4,6 +4,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:test1/constants.dart';
 import 'package:test1/controllers/cart_controller.dart';
+import '../controllers/product_controller.dart';
 import '../models/product_model.dart';
 import '../views/product_view.dart';
 
@@ -18,7 +19,10 @@ class ProductCard extends StatelessWidget {
     ColorScheme cs = Theme.of(context).colorScheme;
     return GestureDetector(
       onTap: () {
-        Get.to(() => ProductView(product: product, heroTag: "product${product.id}$productCardHeroTag"));
+        ProductController pVC = Get.put(ProductController(product: product));
+        Future.delayed(Duration(milliseconds: 200), () {
+          Get.to(() => ProductView(product: product, heroTag: "product${product.id}$productCardHeroTag"));
+        });
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
