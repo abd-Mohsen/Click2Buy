@@ -20,9 +20,9 @@ class ProductCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         ProductController pVC = Get.put(ProductController(product: product));
-        Future.delayed(Duration(milliseconds: 200), () {
-          Get.to(() => ProductView(product: product, heroTag: "product${product.id}$productCardHeroTag"));
-        });
+        //Future.delayed(Duration(milliseconds: 0), () {
+        Get.to(() => ProductView(product: product, heroTag: "product${product.id}$productCardHeroTag"));
+        //});
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
