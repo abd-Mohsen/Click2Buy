@@ -115,116 +115,119 @@ class _CategoryViewState extends State<CategoryView> {
           //   ),
           // ],
         ),
-        body: RefreshIndicator(
-          onRefresh: refreshCategory,
-          child: Column(
-            children: [
-              Stack(
-                children: [
-                  ClipRect(
-                    child: SizedBox(
-                      height: 200,
-                      width: MediaQuery.of(context).size.width,
-                      child: Hero(
-                        tag: widget.heroTag,
-                        child: CachedNetworkImage(
-                          imageUrl: "$kHostIP/storage/${widget.category.photo}",
-                          fit: BoxFit.cover,
-                          httpHeaders: kImageHeaders,
-                          placeholder: (context, url) => SpinKitFadingCircle(
-                            color: cs.primary,
-                            size: 30,
-                            duration: const Duration(milliseconds: 1000),
+        body: SizedBox(
+          height: context.height,
+          child: RefreshIndicator(
+            onRefresh: refreshCategory,
+            child: Column(
+              children: [
+                Stack(
+                  children: [
+                    ClipRect(
+                      child: SizedBox(
+                        height: 200,
+                        width: MediaQuery.of(context).size.width,
+                        child: Hero(
+                          tag: widget.heroTag,
+                          child: CachedNetworkImage(
+                            imageUrl: "$kHostIP/storage/${widget.category.photo}",
+                            fit: BoxFit.cover,
+                            httpHeaders: kImageHeaders,
+                            placeholder: (context, url) => SpinKitFadingCircle(
+                              color: cs.primary,
+                              size: 30,
+                              duration: const Duration(milliseconds: 1000),
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  Positioned.fill(
-                    bottom: 0,
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 0, sigmaY: 0),
-                      child: Container(
-                        color: cs.background.withOpacity(0.1),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    bottom: 0,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        widget.category.name,
-                        style: kTextStyle30Bold.copyWith(
-                          color: Colors.white,
-                          shadows: [
-                            const Shadow(
-                              color: Colors.black,
-                              offset: Offset(2, 2),
-                              blurRadius: 3,
-                            ),
-                          ],
+                    Positioned.fill(
+                      bottom: 0,
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 0, sigmaY: 0),
+                        child: Container(
+                          color: cs.background.withOpacity(0.1),
                         ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    Positioned(
+                      bottom: 0,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          widget.category.name,
+                          style: kTextStyle30Bold.copyWith(
+                            color: Colors.white,
+                            shadows: [
+                              const Shadow(
+                                color: Colors.black,
+                                offset: Offset(2, 2),
+                                blurRadius: 3,
+                              ),
+                            ],
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                ExpansionTile(
+                  initiallyExpanded: widget.category.childrenCount == 0,
+                  title: Text(
+                    "products".tr,
+                    style: kTextStyle30,
+                  ),
+                  subtitle: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "click to view".tr,
+                      style: kTextStyle16.copyWith(color: cs.onBackground.withOpacity(0.8)),
+                    ),
+                  ),
+                  children: [
+                    SizedBox(
+                      height: 400,
+                      child: GridView.builder(
+                        padding: EdgeInsets.all(0),
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisExtent: 250,
+                        ),
+                        itemCount: products.length,
+                        itemBuilder: (context, i) => ProductCard(
+                          products[i],
+                          "${widget.category.parentId}${widget.category.id}cat${products[i].id}pro",
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const Divider(
+                  thickness: 5,
+                  indent: 10,
+                  endIndent: 10,
+                ),
+                if (widget.category.childrenCount != 0)
+                  Text(
+                    "sub categories".tr,
+                    style: kTextStyle30,
+                  ),
+                if (widget.category.childrenCount != 0)
+                  Expanded(
+                    child: ListView.builder(
+                      padding: EdgeInsets.all(8),
+                      itemCount: subCategories.length,
+                      itemBuilder: (context, i) => CategoryCard(
+                        category: subCategories[i],
+                        heroTag: "cat${subCategories[i].id}${subCategories[i].parentId}",
                       ),
                     ),
                   ),
-                ],
-              ),
-              ExpansionTile(
-                initiallyExpanded: widget.category.childrenCount == 0,
-                title: Text(
-                  "products".tr,
-                  style: kTextStyle30,
-                ),
-                subtitle: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "click to view".tr,
-                    style: kTextStyle16.copyWith(color: cs.onBackground.withOpacity(0.8)),
-                  ),
-                ),
-                children: [
-                  SizedBox(
-                    height: 400,
-                    child: GridView.builder(
-                      padding: EdgeInsets.all(0),
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        mainAxisExtent: 250,
-                      ),
-                      itemCount: products.length,
-                      itemBuilder: (context, i) => ProductCard(
-                        products[i],
-                        "${widget.category.parentId}${widget.category.id}cat${products[i].id}pro",
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const Divider(
-                thickness: 5,
-                indent: 10,
-                endIndent: 10,
-              ),
-              if (widget.category.childrenCount != 0)
-                Text(
-                  "sub categories".tr,
-                  style: kTextStyle30,
-                ),
-              if (widget.category.childrenCount != 0)
-                Expanded(
-                  child: ListView.builder(
-                    padding: EdgeInsets.all(8),
-                    itemCount: subCategories.length,
-                    itemBuilder: (context, i) => CategoryCard(
-                      category: subCategories[i],
-                      heroTag: "cat${subCategories[i].id}${subCategories[i].parentId}",
-                    ),
-                  ),
-                ),
-            ],
+              ],
+            ),
           ),
         ));
   }
