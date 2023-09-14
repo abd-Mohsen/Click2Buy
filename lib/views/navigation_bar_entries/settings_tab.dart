@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:test1/components/auth_button.dart';
 import 'package:test1/controllers/home_controller.dart';

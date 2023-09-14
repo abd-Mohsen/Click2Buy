@@ -1,6 +1,4 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:test1/constants.dart';
 import 'package:test1/themes.dart';
 import 'package:test1/controllers/cart_controller.dart';
@@ -120,43 +118,88 @@ class HomeView extends StatelessWidget {
         body: GetBuilder<HomeController>(
           builder: (con) => PageView(
             controller: con.navigateController,
-            onPageChanged: (int index) => con.changeTab(index),
+            //physics: NeverScrollableScrollPhysics(),
+            onPageChanged: (int index) => con.changeTabFromPage(index),
             children: bodies,
           ),
         ),
-
         bottomNavigationBar: GetBuilder<HomeController>(
-          builder: (con) => GNav(
-            tabs: [
-              GButton(
-                icon: Icons.settings,
-                text: "settings".tr,
-              ),
-              GButton(
-                icon: Icons.home_filled,
-                text: "home".tr,
-              ),
-              GButton(
-                icon: Icons.category_rounded,
-                text: "categories".tr,
-              ),
-            ],
-            textStyle: kTextStyle18.copyWith(color: cs.onPrimary),
-            tabMargin: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-            // rippleColor: Colors.grey[900]!,
-            // hoverColor: Colors.grey[900]!,
-            gap: 8,
-            activeColor: cs.onPrimary,
-            iconSize: 30,
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-            tabBackgroundColor: cs.primary,
-            selectedIndex: con.selectedIndex,
-            backgroundColor: !Get.isDarkMode ? Colors.grey.shade200 : cs.surface,
-            color: cs.onSurface,
-            duration: const Duration(milliseconds: 250),
-            onTabChange: (i) => con.changeTab(i),
+          builder: (con) => NavigationBarTheme(
+            data: NavigationBarThemeData(),
+            child: NavigationBar(
+              height: 50,
+              selectedIndex: con.selectedIndex,
+              backgroundColor: cs.surface,
+              animationDuration: const Duration(milliseconds: 250),
+              indicatorColor: cs.primary.withOpacity(0.8),
+              labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
+              onDestinationSelected: (int i) {
+                con.changeTabFromBar(i);
+              },
+              destinations: [
+                GestureDetector(
+                  onTap: () {
+                    //con.changeTab(0);
+                  },
+                  child: NavigationDestination(
+                    icon: Icon(Icons.person_outline),
+                    label: '',
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    //con.changeTab(1);
+                  },
+                  child: NavigationDestination(
+                    icon: Icon(Icons.home_outlined),
+                    label: '',
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    //con.changeTab(2);
+                  },
+                  child: NavigationDestination(
+                    icon: Icon(Icons.category_outlined),
+                    label: '',
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
+        //GetBuilder<HomeController>(
+        //   builder: (con) => GNav(
+        //     tabs: [
+        //       GButton(
+        //         icon: Icons.settings,
+        //         text: "settings".tr,
+        //       ),
+        //       GButton(
+        //         icon: Icons.home_filled,
+        //         text: "home".tr,
+        //       ),
+        //       GButton(
+        //         icon: Icons.category_rounded,
+        //         text: "categories".tr,
+        //       ),
+        //     ],
+        //     textStyle: kTextStyle18.copyWith(color: cs.onPrimary),
+        //     tabMargin: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+        //     // rippleColor: Colors.grey[900]!,
+        //     // hoverColor: Colors.grey[900]!,
+        //     gap: 8,
+        //     activeColor: cs.onPrimary,
+        //     iconSize: 30,
+        //     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+        //     tabBackgroundColor: cs.primary,
+        //     selectedIndex: con.selectedIndex,
+        //     backgroundColor: !Get.isDarkMode ? Colors.grey.shade200 : cs.surface,
+        //     color: cs.onSurface,
+        //     duration: const Duration(milliseconds: 250),
+        //     onTabChange: (i) => con.changeTab(i),
+        //   ),
+        // ),
       ),
     );
   }

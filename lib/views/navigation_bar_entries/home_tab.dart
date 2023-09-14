@@ -25,7 +25,7 @@ class HomeTab extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 4),
               child: GetBuilder<HomeController>(builder: (con) {
-                if (con.isLoadingBanner) {
+                if (con.isLoadingBanners) {
                   return Shimmer.fromColors(
                     baseColor: Colors.grey[600]!,
                     highlightColor: Colors.grey[200]!,
@@ -37,7 +37,7 @@ class HomeTab extends StatelessWidget {
                     ),
                   );
                 } else {
-                  if (!con.isFetchedBanner) {
+                  if (!con.isFetchedBanners) {
                     return const SizedBox.shrink();
                   } else {
                     return CarouselSlider.builder(

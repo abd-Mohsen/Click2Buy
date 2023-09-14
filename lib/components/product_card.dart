@@ -19,10 +19,8 @@ class ProductCard extends StatelessWidget {
     ColorScheme cs = Theme.of(context).colorScheme;
     return GestureDetector(
       onTap: () {
-        ProductController pVC = Get.put(ProductController(product: product));
-        //Future.delayed(Duration(milliseconds: 0), () {
+        Get.put(ProductController(product: product));
         Get.to(() => ProductView(product: product, heroTag: "product${product.id}$productCardHeroTag"));
-        //});
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),

@@ -38,16 +38,16 @@ class HomeController extends GetxController {
   //for fetching product rows in home from server
   late List<ProductRowModel> _rowsList;
   List<ProductRowModel> get rowsList => _rowsList;
+
   bool _isLoadingRows = true;
   bool get isLoadingRows => _isLoadingRows;
-  bool _isFetchedRows = false;
-  bool get isFetchedRows => _isFetchedRows;
-
   void setLoadingRows(bool value) {
     _isLoadingRows = value;
     update();
   }
 
+  bool _isFetchedRows = false;
+  bool get isFetchedRows => _isFetchedRows;
   void setFetchedRows(bool value) {
     _isFetchedRows = value;
     update();
@@ -79,17 +79,16 @@ class HomeController extends GetxController {
   //for fetching current user from server
   late List<UserModel> _currentUser;
   List<UserModel> get currentUser => _currentUser;
+
   bool _isLoadingUser = true;
   bool get isLoadingUser => _isLoadingUser;
-
-  bool _isFetchedUser = false;
-  bool get isFetchedUser => _isFetchedUser;
-
   void setLoadingUser(bool value) {
     _isLoadingUser = value;
     update();
   }
 
+  bool _isFetchedUser = false;
+  bool get isFetchedUser => _isFetchedUser;
   void setFetchedUser(bool value) {
     _isFetchedUser = value;
     update();
@@ -125,16 +124,16 @@ class HomeController extends GetxController {
   //for fetching parent categories from server
   late List<CategoryModel> _categoriesList;
   List<CategoryModel> get categoriesList => _categoriesList;
+
   bool _isLoadingCategories = true;
   bool get isLoadingCategories => _isLoadingCategories;
-  bool _isFetchedCat = false;
-  bool get isFetchedCat => _isFetchedCat;
-
   void setLoadingCategories(bool value) {
     _isLoadingCategories = value;
     update();
   }
 
+  bool _isFetchedCat = false;
+  bool get isFetchedCat => _isFetchedCat;
   void setFetchedCat(bool value) {
     _isFetchedCat = value;
     update();
@@ -163,16 +162,17 @@ class HomeController extends GetxController {
 
   late List<BannerModel> banners = [];
 
-  bool isLoadingBanner = false;
-  bool isFetchedBanner = false;
-
+  bool _isLoadingBanners = false;
+  bool get isLoadingBanners => _isLoadingBanners;
   void setLoadingBanners(bool value) {
-    isLoadingBanner = value;
+    _isLoadingBanners = value;
     update();
   }
 
+  bool _isFetchedBanners = false;
+  bool get isFetchedBanners => _isFetchedBanners;
   void setFetchedBanners(bool value) {
-    isFetchedBanner = value;
+    _isFetchedBanners = value;
     update();
   }
 
@@ -200,7 +200,7 @@ class HomeController extends GetxController {
     keepPage: true,
   );
 
-  void changeTab(int index) {
+  void changeTabFromPage(int index) {
     _selectedIndex = index;
     navigateController.animateToPage(
       index,
@@ -210,10 +210,22 @@ class HomeController extends GetxController {
     update();
   }
 
+  void changeTabFromBar(int index) {
+    _selectedIndex = index;
+    navigateController.jumpToPage(
+      index,
+    );
+    update();
+  }
+
   //---------------------------------------------------------------------------------
   //for edit profile
   bool _isLoadingConfirmPassword = false;
   bool get isLoadingConfirmPassword => _isLoadingConfirmPassword;
+  void setLoadingConfirm(bool value) {
+    _isLoadingConfirmPassword = value;
+    update();
+  }
 
   GlobalKey<FormState> settingKey = GlobalKey<FormState>();
   bool buttonPressed = false;
@@ -254,11 +266,6 @@ class HomeController extends GetxController {
         setLoadingConfirm(false);
       }
     }
-  }
-
-  void setLoadingConfirm(bool value) {
-    _isLoadingConfirmPassword = value;
-    update();
   }
 
   //---------------------------------------------------------------------------------

@@ -19,6 +19,7 @@ class EditOrderController extends GetxController {
     //   _currentQuantity[variant.id] = variant.quantity;
     // }
   }
+  //todo: use spread operator to not change original order
 
   EditOrderController({required this.order}) {
     //_variants = List.generate(order.variants.length, (i) => order.variants[i]);

@@ -64,6 +64,7 @@ class CartController extends GetxController {
     super.onInit();
     loadCartFromLocalStorage();
     getCompanies();
+    // todo: make a request to update variants quantities , on init and on list refresh
   }
 
   void addToCart(VariantModel1 variant, ProductModel product) {

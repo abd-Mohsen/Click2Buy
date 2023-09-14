@@ -6,8 +6,10 @@ import 'package:test1/components/search_card.dart';
 import 'package:test1/constants.dart';
 import 'package:test1/controllers/search_controller.dart';
 
+import '../controllers/product_controller.dart';
 import '../views/product_view.dart';
 
+//todo: i get "so many requests" when typing fast
 typedef SearchFilter<T> = List<String?> Function(T t);
 typedef ResultBuilder<T> = Widget Function(T t);
 typedef SortCallback<T> = int Function(T a, T b);
@@ -358,6 +360,7 @@ class MySearchPage<T> extends SearchDelegate<T?> {
                 final product = cont.searchHistory.entries.elementAt(i).value;
                 return ListTile(
                   onTap: () {
+                    Get.put(ProductController(product: product));
                     Get.to(ProductView(product: product, heroTag: ""));
                     cont.addToHistory(product);
                   },
@@ -415,6 +418,7 @@ class MySearchPage<T> extends SearchDelegate<T?> {
                         child: SearchCard(
                           product: result[i],
                           onPress: () {
+                            Get.put(ProductController(product: result[i]));
                             Get.off(ProductView(product: result[i], heroTag: ""));
                             sC.addToHistory(result[i]);
                           },

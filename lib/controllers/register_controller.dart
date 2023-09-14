@@ -29,8 +29,13 @@ class RegisterController extends GetxController {
 
   GlobalKey<FormState> registerFormKey = GlobalKey<FormState>();
   bool buttonPressed = false;
+
   bool _isLoadingRegister = false;
   bool get isLoadingRegister => _isLoadingRegister;
+  void toggleLoadingRegister(bool value) {
+    _isLoadingRegister = value;
+    update();
+  }
 
   bool _passwordVisible = false;
   bool get passwordVisible => _passwordVisible;
@@ -46,17 +51,12 @@ class RegisterController extends GetxController {
     update();
   }
 
-  void toggleLoadingRegister(bool value) {
-    _isLoadingRegister = value;
-    update();
-  }
-
   //todo: cant get to otp page after timed out (email is already taken)
   Future register() async {
     buttonPressed = true;
     bool isValid = registerFormKey.currentState!.validate();
     if (isValid) {
-      print(fName.text);
+      //print(fName.text);
       toggleLoadingRegister(true);
       try {
         _registerToken =

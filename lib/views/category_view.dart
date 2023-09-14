@@ -189,9 +189,9 @@ class _CategoryViewState extends State<CategoryView> {
                   ),
                   children: [
                     SizedBox(
-                      height: 400,
+                      height: context.height / 2.4,
                       child: GridView.builder(
-                        padding: EdgeInsets.all(0),
+                        padding: EdgeInsets.zero,
                         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
                           mainAxisExtent: 250,

@@ -5,6 +5,7 @@ import 'package:test1/models/product_model.dart';
 import 'package:get/get.dart';
 import 'package:test1/views/product_view.dart';
 import '../constants.dart';
+import '../controllers/product_controller.dart';
 
 class WishlistCard extends StatelessWidget {
   final ProductModel product;
@@ -22,6 +23,7 @@ class WishlistCard extends StatelessWidget {
         elevation: 5,
         child: ListTile(
           onTap: () {
+            Get.put(ProductController(product: product));
             Get.to(ProductView(product: product, heroTag: heroTag));
           },
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),

@@ -5,6 +5,7 @@ import 'package:test1/controllers/cart_controller.dart';
 import 'package:test1/models/variant_model1.dart';
 import 'package:test1/views/product_view.dart';
 
+import '../controllers/product_controller.dart';
 import '../models/product_model.dart';
 
 class CartCard extends StatelessWidget {
@@ -42,6 +43,7 @@ class CartCard extends StatelessWidget {
                   tileColor: cs.surface,
                   leading: GestureDetector(
                     onTap: () {
+                      Get.put(ProductController(product: product));
                       Get.to(() => ProductView(product: product, heroTag: "cart${product.id}${variant.id}"));
                       //todo: if product is no longer available show a dialog
                     },

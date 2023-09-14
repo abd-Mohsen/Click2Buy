@@ -15,7 +15,7 @@ import '../constants.dart';
 import '../models/product_model.dart';
 
 //todo refresh this page alone and add it to cart
-//todo controller is taking long to initialize after deletion
+
 class ProductView extends StatelessWidget {
   final ProductModel product;
   final String heroTag;
@@ -205,32 +205,30 @@ class ProductView extends StatelessWidget {
                   Get.back();
                 }),
           ),
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SizedBox(
-                    height: MediaQuery.of(context).size.height / 3,
-                    width: MediaQuery.of(context).size.width / 2,
-                    child: Center(
-                      child: Hero(
-                        tag: heroTag,
-                        child: GetBuilder<ProductController>(
-                          //dispose: (_) => pC.dispose(),
-                          builder: (con) => CachedNetworkImage(
-                            imageUrl: "$kHostIP/storage/${con.currentPicUrl}",
-                            fit: BoxFit.fill,
-                            httpHeaders: const {'Connection': 'keep-alive'},
-                            placeholder: (context, url) => Center(
-                              child: SizedBox(
-                                height: MediaQuery.of(context).size.height / 3,
-                                width: MediaQuery.of(context).size.width / 2,
-                                child: SpinKitPouringHourGlass(
-                                  color: cs.onBackground,
-                                  size: 100,
-                                  duration: const Duration(milliseconds: 1000),
-                                ),
+          body: ListView(
+            // if something goes wrong replace listview with column + single child scroll
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  height: MediaQuery.of(context).size.height / 3,
+                  width: MediaQuery.of(context).size.width / 2,
+                  child: Center(
+                    child: Hero(
+                      tag: heroTag,
+                      child: GetBuilder<ProductController>(
+                        builder: (con) => CachedNetworkImage(
+                          imageUrl: "$kHostIP/storage/${con.currentPicUrl}",
+                          fit: BoxFit.fill,
+                          httpHeaders: const {'Connection': 'keep-alive'},
+                          placeholder: (context, url) => Center(
+                            child: SizedBox(
+                              height: MediaQuery.of(context).size.height / 3,
+                              width: MediaQuery.of(context).size.width / 2,
+                              child: SpinKitPouringHourGlass(
+                                color: cs.onBackground,
+                                size: 100,
+                                duration: const Duration(milliseconds: 1000),
                               ),
                             ),
                           ),
@@ -239,178 +237,177 @@ class ProductView extends StatelessWidget {
                     ),
                   ),
                 ),
-                Container(
-                  color: cs.surface,
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        product.title,
-                        style: kTextStyle30Bold.copyWith(color: cs.onSurface),
-                      ),
-                      Divider(
-                        height: 30,
-                        thickness: 3,
-                        color: cs.primary,
-                      ),
-                      //todo: put info icon in the appbar
-                      product.variants.isEmpty
-                          ? const SizedBox.shrink()
-                          : GetBuilder<ProductController>(
-                              builder: (con) => SizedBox(
-                                height: 80,
-                                child: ListView.builder(
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: product.variants.length,
-                                  // get builder
-                                  itemBuilder: (context, i) => VariantCard(
-                                    variant: product.variants[i],
-                                    isSelected: con.selected[i],
-                                    onSelect: () {
-                                      con.changeVariant(product.variants[i], i);
-                                    },
-                                  ),
+              ),
+              Container(
+                color: cs.surface,
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      product.title,
+                      style: kTextStyle30Bold.copyWith(color: cs.onSurface),
+                    ),
+                    Divider(
+                      height: 30,
+                      thickness: 3,
+                      color: cs.primary,
+                    ),
+                    //todo: put info icon in the appbar
+                    product.variants.isEmpty
+                        ? const SizedBox.shrink()
+                        : GetBuilder<ProductController>(
+                            builder: (con) => SizedBox(
+                              height: 80,
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: product.variants.length,
+                                // get builder
+                                itemBuilder: (context, i) => VariantCard(
+                                  variant: product.variants[i],
+                                  isSelected: con.selected[i],
+                                  onSelect: () {
+                                    con.changeVariant(product.variants[i], i);
+                                  },
                                 ),
                               ),
                             ),
-                      ListTile(
-                        title: Row(
-                          children: [
-                            Text(
-                              "rating".tr,
-                              style: kTextStyle30.copyWith(color: cs.onSurface),
-                            ),
-                            const SizedBox(width: 30),
-                            Icon(
-                              Icons.fiber_new_outlined,
-                              color: cs.error,
-                              size: 50,
-                            ),
-                          ],
-                        ),
-                        leading: Icon(Icons.star),
-                        subtitle: Row(
-                          children: [
-                            RatingBar.builder(
-                              ignoreGestures: true,
-                              initialRating: product.rating.isEmpty ? 0.0 : product.rating[0].value.toDouble(),
-                              glow: false,
-                              itemSize: 20,
-                              minRating: 1,
-                              direction: Axis.horizontal,
-                              allowHalfRating: true,
-                              itemCount: 5,
-                              itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-                              itemBuilder: (context, _) => const Icon(
-                                Icons.star,
-                                color: Colors.amber,
-                              ),
-                              onRatingUpdate: (rating) {
-                                //
-                              },
-                            ),
-                            Text(
-                              "(${product.rating.isNotEmpty ? product.rating[0].count : 0})",
-                              style: kTextStyle20,
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      ExpansionTile(
-                        leading: const Icon(
-                          AbdIcons.tag,
-                          size: 30,
-                          //color: cs.primary,
-                        ),
-                        title: Text(
-                          "details".tr,
-                          style: kTextStyle30.copyWith(color: cs.onSurface),
-                        ),
-                        subtitle: Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
-                          child: Text(
-                            "click for details".tr,
-                            style: kTextStyle16,
                           ),
-                        ),
+                    ListTile(
+                      title: Row(
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Text(
-                              parse(product.description).documentElement!.text,
-                              style: kTextStyle18,
-                            ),
+                          Text(
+                            "rating".tr,
+                            style: kTextStyle30.copyWith(color: cs.onSurface),
+                          ),
+                          const SizedBox(width: 30),
+                          Icon(
+                            Icons.fiber_new_outlined,
+                            color: cs.error,
+                            size: 50,
                           ),
                         ],
                       ),
-                      const SizedBox(height: 20),
-                      ExpansionTile(
-                        leading: const Icon(
-                          AbdIcons.forum,
-                          size: 30,
-                          //color: cs.primary,
+                      leading: Icon(Icons.star),
+                      subtitle: Row(
+                        children: [
+                          RatingBar.builder(
+                            ignoreGestures: true,
+                            initialRating: product.rating.isEmpty ? 0.0 : product.rating[0].value.toDouble(),
+                            glow: false,
+                            itemSize: 20,
+                            minRating: 1,
+                            direction: Axis.horizontal,
+                            allowHalfRating: true,
+                            itemCount: 5,
+                            itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                            itemBuilder: (context, _) => const Icon(
+                              Icons.star,
+                              color: Colors.amber,
+                            ),
+                            onRatingUpdate: (rating) {
+                              //
+                            },
+                          ),
+                          Text(
+                            "(${product.rating.isNotEmpty ? product.rating[0].count : 0})",
+                            style: kTextStyle20,
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    ExpansionTile(
+                      leading: const Icon(
+                        AbdIcons.tag,
+                        size: 30,
+                        //color: cs.primary,
+                      ),
+                      title: Text(
+                        "details".tr,
+                        style: kTextStyle30.copyWith(color: cs.onSurface),
+                      ),
+                      subtitle: Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Text(
+                          "click for details".tr,
+                          style: kTextStyle16,
                         ),
-                        title: Text(
-                          "comments".tr,
-                          style: kTextStyle30.copyWith(color: cs.onSurface),
-                        ),
-                        subtitle: Padding(
-                          padding: const EdgeInsets.only(top: 2.0),
+                      ),
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(12.0),
                           child: Text(
-                            "${product.comments.where((comment) => comment.text != "").length} ${"comments".tr}",
+                            parse(product.description).documentElement!.text,
                             style: kTextStyle18,
                           ),
                         ),
-                        children: [
-                          SizedBox(
-                            height: 200,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20),
-                              child: Scrollbar(
-                                thumbVisibility: true,
-                                child: ListView.builder(
-                                  itemCount: product.comments.where((comment) => comment.text != "").length,
-                                  itemBuilder: (context, i) => CommentCard(
-                                    comment: product.comments.where((comment) => comment.text != "").toList()[i],
-                                  ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    ExpansionTile(
+                      leading: const Icon(
+                        AbdIcons.forum,
+                        size: 30,
+                        //color: cs.primary,
+                      ),
+                      title: Text(
+                        "comments".tr,
+                        style: kTextStyle30.copyWith(color: cs.onSurface),
+                      ),
+                      subtitle: Padding(
+                        padding: const EdgeInsets.only(top: 2.0),
+                        child: Text(
+                          "${product.comments.where((comment) => comment.text != "").length} ${"comments".tr}",
+                          style: kTextStyle18,
+                        ),
+                      ),
+                      children: [
+                        SizedBox(
+                          height: 200,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20),
+                            child: Scrollbar(
+                              thumbVisibility: true,
+                              child: ListView.builder(
+                                itemCount: product.comments.where((comment) => comment.text != "").length,
+                                itemBuilder: (context, i) => CommentCard(
+                                  comment: product.comments.where((comment) => comment.text != "").toList()[i],
                                 ),
                               ),
                             ),
                           ),
-                        ],
-                      ),
-                      const SizedBox(height: 20),
-                      product.offer.value == null || product.offer.value == 0
-                          ? Text(
-                              '\$${product.price}',
-                              style: kTextStyle50.copyWith(color: cs.onSurface, decoration: TextDecoration.underline),
-                            )
-                          : Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  '\$${(product.price - (product.price * (product.offer.value! / 100))).toPrecision(2).toString()}',
-                                  style:
-                                      kTextStyle50.copyWith(color: cs.onSurface, decoration: TextDecoration.underline),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    product.offer.value == null || product.offer.value == 0
+                        ? Text(
+                            '\$${product.price}',
+                            style: kTextStyle50.copyWith(color: cs.onSurface, decoration: TextDecoration.underline),
+                          )
+                        : Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                '\$${(product.price - (product.price * (product.offer.value! / 100))).toPrecision(2).toString()}',
+                                style: kTextStyle50.copyWith(color: cs.onSurface, decoration: TextDecoration.underline),
+                              ),
+                              const SizedBox(width: 12),
+                              Text(
+                                '\$${product.price}',
+                                style: kTextStyle30.copyWith(
+                                  color: cs.error.withOpacity(0.6),
+                                  decoration: TextDecoration.lineThrough,
                                 ),
-                                const SizedBox(width: 12),
-                                Text(
-                                  '\$${product.price}',
-                                  style: kTextStyle30.copyWith(
-                                    color: cs.error.withOpacity(0.6),
-                                    decoration: TextDecoration.lineThrough,
-                                  ),
-                                ),
-                              ],
-                            ),
-                    ],
-                  ),
-                )
-              ],
-            ),
+                              ),
+                            ],
+                          ),
+                  ],
+                ),
+              )
+            ],
           ),
         ),
       ),
