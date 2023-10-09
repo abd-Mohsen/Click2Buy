@@ -1,7 +1,7 @@
-# project1
-
 ![Screenshot1](assets/images/logo_dark.png)
 
+
+# project1
 an E-commerce mobile app built using Flutter framework
 here is [the backend and dashboard](https://github.com/ahed0programer/Click2Buy/tree/ahed) for this app.
 this was a university group project that got an excellent 93% result
