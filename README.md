@@ -3,8 +3,8 @@
 <br>
 <br>
 # Click2Buy
-an E-commerce mobile app built using Flutter framework<br>
-here is [the backend and dashboard](https://github.com/ahed0programer/Click2Buy/tree/ahed) for this app.
+an E-commerce mobile app built using Flutter framework. here is [the backend and dashboard](https://github.com/ahed0programer/Click2Buy/tree/ahed) 
+for this app.<br>
 this was a university group project that got an excellent 93% result
 
 ## about app
