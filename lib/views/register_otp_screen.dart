@@ -50,8 +50,8 @@ class RegisterOTPScreen extends StatelessWidget {
                 tag: "logo",
                 child: Image.asset(
                   Get.isDarkMode ? "assets/images/logo_dark.png" : "assets/images/logo_light.png",
-                  height: MediaQuery.of(context).size.width / 5,
-                  width: MediaQuery.of(context).size.width / 5,
+                  height: MediaQuery.of(context).size.width / 3,
+                  width: MediaQuery.of(context).size.width / 3,
                 ),
               ),
               Padding(

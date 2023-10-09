@@ -46,6 +46,7 @@ class EditProfileController extends GetxController {
           second = await RemoteServices.editProfile(name, phone, _getStorage.read("token"));
         }
         if (first || second) {
+          //todo: refresh user
           Get.back();
           Get.defaultDialog(title: "success".tr, middleText: "changes will take effect in seconds");
         }

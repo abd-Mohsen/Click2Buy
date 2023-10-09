@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:test1/constants.dart';
 
 ///custom themes
 
@@ -51,4 +52,34 @@ class MyThemes {
       ),
     ),
   );
+
+  ///do those next time
+
+  // static ThemeData myLightArabicMode = ThemeData.light().copyWith(
+  //     // light theme colors..
+  //     //
+  //     textTheme: TextTheme(
+  //   displayMedium: TextStyle(fontFamily: "arabic font", fontSize: 20),
+  // ));
+  //
+  // static ThemeData myLightEnglishMode = ThemeData.light().copyWith(
+  //     // light theme colors..
+  //     //
+  //     textTheme: TextTheme(
+  //   displayMedium: TextStyle(fontFamily: "english font", fontSize: 20),
+  // ));
+  //
+  // static ThemeData myDarkArabicMode = ThemeData.light().copyWith(
+  //     // dark theme colors..
+  //     //
+  //     textTheme: TextTheme(
+  //   displayMedium: TextStyle(fontFamily: "arabic font", fontSize: 20),
+  // ));
+  //
+  // static ThemeData myDarkEnglishMode = ThemeData.light().copyWith(
+  //     // dark theme colors..
+  //     //
+  //     textTheme: TextTheme(
+  //   displayMedium: TextStyle(fontFamily: "english font", fontSize: 20),
+  // ));
 }

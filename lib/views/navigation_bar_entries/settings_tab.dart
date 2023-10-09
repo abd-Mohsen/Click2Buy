@@ -19,6 +19,7 @@ class SettingsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ColorScheme cs = Theme.of(context).colorScheme;
+    //TextTheme tt = Theme.of(context).textTheme;
     LocaleController lC = LocaleController();
     HomeController hC = Get.find();
     final password = TextEditingController();
@@ -176,6 +177,7 @@ class SettingsTab extends StatelessWidget {
                                             onPressed: () {
                                               Get.dialog(
                                                 AlertDialog(
+                                                  // todo: clean up this dialog
                                                   shape: RoundedRectangleBorder(
                                                     borderRadius: BorderRadius.circular(10),
                                                   ),
@@ -257,7 +259,7 @@ class SettingsTab extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                     child: ListTile(
                       onTap: () {
-                        Get.offAll(() => LoginPage());
+                        Get.offAll(() => const LoginPage());
                       },
                       tileColor: cs.surface,
                       leading: Icon(Icons.login, color: cs.primary, size: 30),
@@ -282,7 +284,7 @@ class SettingsTab extends StatelessWidget {
                   leading: Icon(Icons.favorite, color: cs.onBackground),
                   title: Text(
                     "my wishlist".tr,
-                    style: kTextStyle20.copyWith(color: cs.onBackground),
+                    style: kTextStyle20.copyWith(color: cs.onBackground, fontFamily: kFontFamily),
                   ),
                 )
               : const SizedBox.shrink(),

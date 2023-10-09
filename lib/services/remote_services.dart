@@ -24,7 +24,7 @@ import '../views/login_page.dart';
 
 //todo: make all get storage token reads from here, not controllers
 class RemoteServices {
-  static const String _hostIP = "http://10.0.2.2:8000/api";
+  static final String _hostIP = "$kHostIP/api";
   static final GetStorage _getStorage = GetStorage();
 
   static var client = http.Client();

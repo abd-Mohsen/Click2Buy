@@ -137,7 +137,7 @@ class CartCard extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 12),
                       child: Text(
-                        "${((variant.price - (variant.price * (product.offer.value ?? 0) / 100)) * cC.quantity[variant.id]!).toDouble()}\$",
+                        "${((variant.price - (variant.price * (product.offer.value ?? 0) / 100)) * cC.quantity[variant.id]!).toDouble().toPrecision(2)}\$",
                         style: kTextStyle24Bold.copyWith(color: cs.onSurface),
                       ),
                     ),

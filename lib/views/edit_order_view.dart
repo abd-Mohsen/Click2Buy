@@ -163,7 +163,7 @@ class EditOrderView extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
               child: ElevatedButton(
                 onPressed: () {
                   con.selected
