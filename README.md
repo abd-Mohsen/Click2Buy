@@ -1,6 +1,6 @@
-![Screenshot1](assets/images/logo_dark.png)
-
-
+![Screenshot1](assets/images/logo_dark.png)  
+<br>
+<br>
 # project1
 an E-commerce mobile app built using Flutter framework
 here is [the backend and dashboard](https://github.com/ahed0programer/Click2Buy/tree/ahed) for this app.
@@ -26,9 +26,17 @@ this was a university group project that got an excellent 93% result
 ## ScreenShots
 ![Screenshot1](demos/login.PNG) ![Screenshot2](demos/order_details.PNG)
 
-![Screenshot3](demos/cart_dark.PNG) ![Screenshot4](demos/home_view.PNG)
+![Screenshot3](demos/cart_dark.PNG) ![Screenshot4](demos/cart_light.PNG)
 
 ![Screenshot5](demos/search_in_action.PNG) ![Screenshot6](demos/search_filters.PNG)
+
+![Screenshot5](demos/product_view.PNG) ![Screenshot6](demos/product_view2.PNG)
+
+![Screenshot5](demos/guest_settings.PNG) ![Screenshot6](demos/settings_dark.PNG)
+
+![Screenshot5](demos/category_view.PNG) ![Screenshot6](demos/categories.PNG)
+
+![Screenshot5](demos/home_view.PNG) ![Screenshot6](demos/full_view.PNG)
 
 check [this folder](demos) for more screenshots
 
